@@ -8,22 +8,6 @@
 	<name>RESTServ</name>
 	<dependencies>
 
-		<!-- HIBERNATE -->
-
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.2.2.Final</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.4.Final</version>
-		</dependency>
-
 		<!-- JERSEY -->
 
 		<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-server -->
@@ -32,16 +16,6 @@
 			<artifactId>jersey-server</artifactId>
 			<version>1.19.2</version>
 		</dependency>
-
-		<!-- MYSQL CONNECTOR -->
-
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
-		</dependency>
-
 
 	</dependencies>
 	<build>
