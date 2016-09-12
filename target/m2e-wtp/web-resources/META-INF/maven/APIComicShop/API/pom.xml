@@ -8,12 +8,16 @@
 	<name>API</name>
 	<dependencies>
 
+		<!-- JBOSS MODULE PEUT ETRE PAS UTILE -->
+
 		<!-- https://mvnrepository.com/artifact/org.jboss.modules/jboss-modules -->
 		<dependency>
 			<groupId>org.jboss.modules</groupId>
 			<artifactId>jboss-modules</artifactId>
 			<version>1.5.2.Final</version>
 		</dependency>
+
+		<!-- EJB -->
 
 		<!-- https://mvnrepository.com/artifact/org.jboss.spec.javax.ejb/jboss-ejb-api_3.1_spec -->
 		<dependency>
@@ -22,35 +26,28 @@
 			<version>1.0.2.Final</version>
 		</dependency>
 
+	<!-- RESTEASY -->
+
+		<!-- core library -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.2.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jackson-provider -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.19.Final</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-		</dependency>
-
-		<!-- JERSEY -->
-
-		<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-core -->
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-core</artifactId>
-			<version>1.19.2</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-server -->
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>1.19.2</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-servlet -->
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-servlet</artifactId>
-			<version>1.19.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->

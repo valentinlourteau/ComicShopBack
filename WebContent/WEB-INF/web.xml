@@ -5,8 +5,9 @@
 	id="WebApp_ID" version="3.1">
 	<display-name>api</display-name>
 	<servlet>
-		<servlet-name>api</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<description>JAX-RS Tools Generated - Do not modify</description>
+		<servlet-name>RestEasy</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
 		<init-param>
 			<param-name>api</param-name>
 			<param-value>api</param-value>
@@ -14,8 +15,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>api</servlet-name>
+		<servlet-name>RestEasy</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
-
 </web-app>

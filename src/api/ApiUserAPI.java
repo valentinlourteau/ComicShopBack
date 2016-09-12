@@ -10,25 +10,23 @@ import javax.ws.rs.core.Response;
 
 import entities.ApiUser;
 
-@Path("/ApiUser")
+@Path("ApiUser")
 public class ApiUserAPI {
 
 	@POST
-//	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(ApiUser user) {
-		System.out.println("JE PASSE");
+		System.out.println("JE PASSE DANS LE POST");
 		if (user.getUsername() == null && user.getPwd() == null)
 			return Response.status(404).build();
 		return Response.status(200).build();
 	}
 	
 	@GET
-//	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findUser() {
-		System.out.println("JE PASSE");
+		System.out.println("JE PASSE DANS LE GET");
 		return Response.status(200).build();
 	}
 

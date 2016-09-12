@@ -1,3 +1,4 @@
+api\JaxRSActivator.class
 dao\DAOImpl.class
 services\ApiUserServiceImpl.class
 api\ApiUserAPI.class
