@@ -6,7 +6,10 @@ import java.lang.reflect.ParameterizedType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public class GenericDaoJpaImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
+import misc.QueryDslEntities;
+
+public class GenericDaoJpaImpl<T, PK extends Serializable> extends QueryDslEntities implements GenericDao<T, PK> {
+	
 
 	protected Class<T> entityClass;
 

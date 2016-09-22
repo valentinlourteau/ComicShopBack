@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 
 import dao.ApiUserDao;
 import entities.ApiUser;
+import services.ApiUserService;
 
 @Path("ApiUser")
 public class ApiUserAPI {
@@ -18,22 +19,29 @@ public class ApiUserAPI {
 	@Inject
 	ApiUserDao apiUserDao;
 
+	@Inject
+	ApiUserService apiUserService;
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(ApiUser user) {
-		System.out.println("JE PASSE DANS LE POST");
-		if (user.getUsername() == null && user.getPwd() == null)
-			return Response.status(404).build();
-		apiUserDao.persist(user);
-		return Response.status(200).build();
+		if (user.getUsername() == null || user.getPwd() == null)
+			return Response.status(Response.Status.NOT_ACCEPTABLE).entity(user).build();
+
+		ApiUser newUser = apiUserDao.findBy(user.getUsername(), apiUserService.hashPassword(user.getPwd()));
+		if (newUser == null) {
+			user.setPwd(apiUserService.hashPassword(user.getPwd()));
+			apiUserDao.persist(user);
+			return Response.ok(user).build();
+		} else
+			return Response.status(Response.Status.CONFLICT).entity(newUser).build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findUser() {
-		System.out.println("JE PASSE DANS LE GET");
-		return Response.status(200).build();
+		return Response.ok().build();
 	}
 
 }
