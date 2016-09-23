@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class ApiUser {
 
 	@Id
-	@Column(name = "ID")
+	@Column(name = "USER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

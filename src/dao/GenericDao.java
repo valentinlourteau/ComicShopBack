@@ -9,4 +9,5 @@ public interface GenericDao<T, PK extends Serializable> {
 	T merge(T t);
 
 	void delete(T t);
+	
 }
