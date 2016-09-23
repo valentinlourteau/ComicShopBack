@@ -27,4 +27,14 @@ public class GuideServiceImpl implements GuideService {
 		return null;
 	}
 
+	@Override
+	public void persist(Guide newGuide) {
+		guideDao.persist(newGuide);
+	}
+
+	@Override
+	public void delete(Guide guide) {
+		guideDao.delete(guide);
+	}
+
 }

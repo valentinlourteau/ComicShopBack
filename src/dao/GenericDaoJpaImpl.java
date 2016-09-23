@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import misc.QueryDslEntities;
 
-public class GenericDaoJpaImpl<T, PK extends Serializable> extends QueryDslEntities implements GenericDao<T, PK> {
+public class GenericDaoJpaImpl<T, PK extends Serializable> implements GenericDao<T, PK>, QueryDslEntities {
 	
 
 	protected Class<T> entityClass;

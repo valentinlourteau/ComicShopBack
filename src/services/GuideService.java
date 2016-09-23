@@ -12,5 +12,9 @@ public interface GuideService {
 	public Guide findBy(Long id);
 	
 	public List<Guide> findAll();
+	
+	public void persist(Guide newGuide);
+
+	public void delete(Guide guide);
 
 }

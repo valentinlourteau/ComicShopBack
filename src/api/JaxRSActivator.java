@@ -10,14 +10,13 @@ import javax.ws.rs.core.Application;
 public class JaxRSActivator extends Application {
 	
 	public JaxRSActivator() {
-		// TODO Auto-generated constructor stub
-		System.out.println("Je passe dans le constructeur de l'application");
 	}
 	
 	@Override
 	public Set<Class<?>> getClasses() {
 	    Set<Class<?>> classes = new HashSet<Class<?>>();
 	    classes.add(ApiUserAPI.class);
+	    classes.add(GuideAPI.class);
 	    return classes;
 	}
 

@@ -1,9 +1,13 @@
 package misc;
 
 import entities.QApiUser;
+import entities.QGuide;
 
-public class QueryDslEntities {
+public interface QueryDslEntities {
 	
-	public final static QApiUser API_USER = QApiUser.apiUser;
+	final QApiUser API_USER = QApiUser.apiUser;
+	
+	final QGuide GUIDE = QGuide.guide;
+	
 	
 }
