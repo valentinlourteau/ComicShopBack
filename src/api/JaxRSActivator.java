@@ -3,9 +3,11 @@ package api;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.ejb.Singleton;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+@Singleton
 @ApplicationPath("/")
 public class JaxRSActivator extends Application {
 	

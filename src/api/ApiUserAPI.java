@@ -27,6 +27,7 @@ public class ApiUserAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(ApiUser user) {
+		System.out.println("Je passe dans le post de apiuser");
 		ApiUser newUser = apiUserDao.findBy(user.getUsername(), apiUserService.hashPassword(user.getPwd()));
 		if (newUser == null) {
 			user.setPwd(apiUserService.hashPassword(user.getPwd()));
@@ -39,6 +40,7 @@ public class ApiUserAPI {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findUser(@QueryParam("id") Long id) {
+		System.out.println("je passe dans le get");
 		ApiUser user = apiUserService.findBy(id);
 		if (user == null)
 			return Response.noContent().build();

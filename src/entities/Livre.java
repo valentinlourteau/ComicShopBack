@@ -12,11 +12,24 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "LIVRE")
 public class Livre implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@Column(name = "LIVRE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "TITRE")
+	private String titre;
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
 
 	public Long getId() {
 		return id;
@@ -25,7 +38,5 @@ public class Livre implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	private static final long serialVersionUID = 1L;
 
 }
