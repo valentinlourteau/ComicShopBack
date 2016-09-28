@@ -10,28 +10,28 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import dao.ApiUserDao;
-import entities.ApiUser;
-import services.ApiUserService;
+import dao.UserDao;
+import entities.User;
+import services.UserService;
 
-@Path("ApiUser")
-public class ApiUserAPI {
-
-	@Inject
-	ApiUserDao apiUserDao;
+@Path("User")
+public class UserAPI {
 
 	@Inject
-	ApiUserService apiUserService;
+	UserDao userDao;
+
+	@Inject
+	UserService userService;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createUser(ApiUser user) {
+	public Response createUser(User user) {
 		System.out.println("Je passe dans le post de apiuser");
-		ApiUser newUser = apiUserDao.findBy(user.getUsername(), apiUserService.hashPassword(user.getPwd()));
+		User newUser = userDao.findBy(user.getUsername(), userService.hashPassword(user.getPwd()));
 		if (newUser == null) {
-			user.setPwd(apiUserService.hashPassword(user.getPwd()));
-			apiUserDao.persist(user);
+			user.setPwd(userService.hashPassword(user.getPwd()));
+			userDao.persist(user);
 			return Response.ok(user).build();
 		} else
 			return Response.status(Response.Status.CONFLICT).entity(newUser).build();
@@ -41,7 +41,7 @@ public class ApiUserAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findUser(@QueryParam("id") Long id) {
 		System.out.println("je passe dans le get");
-		ApiUser user = apiUserService.findBy(id);
+		User user = userService.findBy(id);
 		if (user == null)
 			return Response.noContent().build();
 		else

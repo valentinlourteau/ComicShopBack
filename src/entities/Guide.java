@@ -1,7 +1,8 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
@@ -12,7 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,14 +30,46 @@ public class Guide implements Serializable {
 
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "LIVRES_COMMENTAIRES")
-	@MapKeyColumn(name = "LIVRE_ID", columnDefinition="INT(18)", nullable = false)
-	@Column(name = "COMMENTAIRE", length=255, nullable = false)
 	private Map<Livre, String> livreCommentaireMap;
 	
 	//THEMES autocomplete de l'user manytomany avec ajout possible, test sur les libelles identiques ou ressemblents
 
 	@Column(name = "B_VISIBLE")
 	private Boolean bVisible;
+	
+	@Column(name = "DATE_PUBLICATION")
+	private Date datePublication;
+	
+	@Column(name = "DATE_DERNIERE_MODIFICATION")
+	private Date dateDerniereModification;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "THEME_ID")
+	private List<Theme> themes;
+
+	public List<Theme> getThemes() {
+		return themes;
+	}
+
+	public void setThemes(List<Theme> themes) {
+		this.themes = themes;
+	}
+
+	public Date getDatePublication() {
+		return datePublication;
+	}
+
+	public void setDatePublication(Date datePublication) {
+		this.datePublication = datePublication;
+	}
+
+	public Date getDateDerniereModification() {
+		return dateDerniereModification;
+	}
+
+	public void setDateDerniereModification(Date dateDerniereModification) {
+		this.dateDerniereModification = dateDerniereModification;
+	}
 
 	public Map<Livre, String> getLivreCommentaireMap() {
 		return livreCommentaireMap;

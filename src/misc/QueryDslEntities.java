@@ -1,11 +1,11 @@
 package misc;
 
-import entities.QApiUser;
 import entities.QGuide;
+import entities.QUser;
 
 public interface QueryDslEntities {
 	
-	final QApiUser API_USER = QApiUser.apiUser;
+	final QUser USER = QUser.user;
 	
 	final QGuide GUIDE = QGuide.guide;
 	
