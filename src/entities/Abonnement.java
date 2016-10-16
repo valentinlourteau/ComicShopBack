@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -15,9 +17,22 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ABONNEMENT")
 public class Abonnement implements Serializable {
-
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ABONNEMENT_ID")
+	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "USER_ID")
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "LIVRE_ID")
+	private Livre livre;
+
 	public Long getId() {
 		return id;
 	}
@@ -34,25 +49,14 @@ public class Abonnement implements Serializable {
 		this.user = user;
 	}
 
-	public Livre getLivres() {
-		return livres;
+	public Livre getLivre() {
+		return livre;
 	}
 
-	public void setLivres(Livre livres) {
-		this.livres = livres;
+	public void setLivre(Livre livre) {
+		this.livre = livre;
 	}
 
-	@Id
-	@Column(name = "ABONNEMENT_ID")
-	private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "USER_ID")
-	private User user;
-	
-	@ManyToOne
-	@JoinColumn(name = "LIVRE_ID")
-	private Livre livres;
 	
 	
 

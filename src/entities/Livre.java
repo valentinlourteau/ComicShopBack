@@ -19,20 +19,12 @@ public class Livre implements Serializable {
 	@Column(name = "LIVRE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	public Integer getPrix() {
-		return prix;
-	}
-
-	public void setPrix(Integer prix) {
-		this.prix = prix;
-	}
 
 	@Column(name = "TITRE")
 	private String titre;
 	
 	@Column(name = "PRIX")
-	private Integer prix;
+	private Double prix;
 
 	public String getTitre() {
 		return titre;
@@ -50,4 +42,11 @@ public class Livre implements Serializable {
 		this.id = id;
 	}
 
+	public Double getPrix() {
+		return prix;
+	}
+
+	public void setPrix(Double prix) {
+		this.prix = prix;
+	}
 }

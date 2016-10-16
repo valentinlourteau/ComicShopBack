@@ -3,11 +3,8 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,9 +26,9 @@ public class Guide implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "LIVRES_COMMENTAIRES")
-	private Map<Livre, String> livreCommentaireMap;
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "LIVRES_COMMENTAIRES_ID", referencedColumnName = "ID")
+	private List<LivreCommentaire> livreCommentaireMap;
 	
 	//THEMES autocomplete de l'user manytomany avec ajout possible, test sur les libelles identiques ou ressemblents
 
@@ -43,16 +41,32 @@ public class Guide implements Serializable {
 	@Column(name = "DATE_DERNIERE_MODIFICATION")
 	private Date dateDerniereModification;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
 	@JoinColumn(name = "THEME_ID")
 	private List<Theme> themes;
 
-	public List<Theme> getThemes() {
-		return themes;
+	public Long getId() {
+		return id;
 	}
 
-	public void setThemes(List<Theme> themes) {
-		this.themes = themes;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+//	public Map<Livre, String> getLivreCommentaireMap() {
+//		return livreCommentaireMap;
+//	}
+//
+//	public void setLivreCommentaireMap(Map<Livre, String> livreCommentaireMap) {
+//		this.livreCommentaireMap = livreCommentaireMap;
+//	}
+
+	public Boolean getbVisible() {
+		return bVisible;
+	}
+
+	public void setbVisible(Boolean bVisible) {
+		this.bVisible = bVisible;
 	}
 
 	public Date getDatePublication() {
@@ -71,28 +85,20 @@ public class Guide implements Serializable {
 		this.dateDerniereModification = dateDerniereModification;
 	}
 
-	public Map<Livre, String> getLivreCommentaireMap() {
+	public List<Theme> getThemes() {
+		return themes;
+	}
+
+	public void setThemes(List<Theme> themes) {
+		this.themes = themes;
+	}
+
+	public List<LivreCommentaire> getLivreCommentaireMap() {
 		return livreCommentaireMap;
 	}
 
-	public void setLivreCommentaireMap(Map<Livre, String> livreCommentaireMap) {
+	public void setLivreCommentaireMap(List<LivreCommentaire> livreCommentaireMap) {
 		this.livreCommentaireMap = livreCommentaireMap;
-	}
-
-	public Boolean getbVisible() {
-		return bVisible;
-	}
-
-	public void setbVisible(Boolean bVisible) {
-		this.bVisible = bVisible;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 }
