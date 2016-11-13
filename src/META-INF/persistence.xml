@@ -4,10 +4,11 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
 	<persistence-unit name="myapp">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:jboss/datasources/apicomicshop</jta-data-source>
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<jta-data-source>java:jboss/datasources/libriweb</jta-data-source>
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="check" />
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
 	</persistence-unit>
 

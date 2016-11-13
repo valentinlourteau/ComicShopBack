@@ -6,10 +6,15 @@ import java.util.List;
 import javax.ejb.Local;
 
 import entities.Guide;
+import entities.Theme;
 
 @Local
 public interface GuideDao extends GenericDao<Guide, Serializable> {
 	
 	public List<Guide> findAll();
+
+	public List<Guide> findAllByTheme(Theme theme);
+	
+	public Guide findBy(Long id);
 
 }

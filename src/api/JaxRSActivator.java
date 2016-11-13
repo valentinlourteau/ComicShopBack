@@ -17,8 +17,10 @@ public class JaxRSActivator extends Application {
 	@Override
 	public Set<Class<?>> getClasses() {
 	    Set<Class<?>> classes = new HashSet<Class<?>>();
-	    classes.add(UserAPI.class);
+//	    classes.add(UserAPI.class);
 	    classes.add(GuideAPI.class);
+	    classes.add(ThemeAPI.class);
+	    classes.add(ProduitAPI.class);
 	    return classes;
 	}
 

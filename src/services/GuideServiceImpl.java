@@ -8,8 +8,8 @@ import javax.inject.Inject;
 
 import dao.GuideDao;
 import entities.Guide;
+import entities.Theme;
 
-@LocalBean
 @Stateless
 public class GuideServiceImpl implements GuideService {
 	
@@ -18,7 +18,7 @@ public class GuideServiceImpl implements GuideService {
 
 	@Override
 	public Guide findBy(Long id) {
-		return guideDao.find(id);
+		return guideDao.findBy(id);
 	}
 
 	@Override
@@ -35,6 +35,11 @@ public class GuideServiceImpl implements GuideService {
 	@Override
 	public void delete(Guide guide) {
 		guideDao.delete(guide);
+	}
+
+	@Override
+	public List<Guide> findAllByTheme(Theme theme) {
+		return guideDao.findAllByTheme(theme);
 	}
 
 }

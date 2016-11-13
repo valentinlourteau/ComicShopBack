@@ -93,9 +93,16 @@
 			<version>1.6.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.sebastian-daschner/jaxrs-analyzer -->
+		<dependency>
+			<groupId>com.sebastian-daschner</groupId>
+			<artifactId>jaxrs-analyzer</artifactId>
+			<version>0.10</version>
+		</dependency>
 
 	</dependencies>
 	<build>
+
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
@@ -130,7 +137,22 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<plugin>
+				<groupId>com.sebastian-daschner</groupId>
+				<artifactId>jaxrs-analyzer-maven-plugin</artifactId>
+				<version>0.10</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>analyze-jaxrs</goal>
+						</goals>
+						<configuration>
+							<backend>swagger</backend>
+							<deployedDomain>example.com</deployedDomain>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
