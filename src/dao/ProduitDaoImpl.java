@@ -15,11 +15,11 @@ import entities.Produit;
 import entities.Theme;
 
 @Stateless
-public class ProduitDaoImpl extends GenericDaoJpaImpl<Produit, Serializable> implements ProduitDao {
+public class ProduitDaoImpl extends GenericJpaDaoImpl<Produit, Serializable> implements ProduitDao {
 
 	@Override
 	public List<Produit> findMinimalProductsByLibelle(String libelle) {
-//		return queryFactory.selectFrom(PRODUIT).where(PRODUIT.titre.containsIgnoreCase(libelle)).fetch();
+		return queryFactory().selectFrom(PRODUIT).where(PRODUIT.titre.containsIgnoreCase(libelle)).fetch();
 	}
 
 }

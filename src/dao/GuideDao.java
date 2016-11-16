@@ -9,7 +9,7 @@ import entities.Guide;
 import entities.Theme;
 
 @Local
-public interface GuideDao extends GenericDao<Guide, Serializable> {
+public interface GuideDao extends GenericJpaDao<Guide, Serializable> {
 	
 	public List<Guide> findAll();
 

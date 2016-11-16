@@ -1,7 +1,7 @@
 package dao;
 import java.io.Serializable;
 
-public interface GenericDao<T, PK extends Serializable> {
+public interface GenericJpaDao<T, PK extends Serializable> {
 	T persist(T t);
 
 	T find(PK id);

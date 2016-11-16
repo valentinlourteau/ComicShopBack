@@ -13,7 +13,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 
 @Stateless
-public class GuideDaoImpl extends GenericDaoJpaImpl<Guide, Serializable> implements GuideDao {
+public class GuideDaoImpl extends GenericJpaDaoImpl<Guide, Serializable> implements GuideDao {
 
 	@Override
 	public List<Guide> findAll() {

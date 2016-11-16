@@ -5,7 +5,7 @@ import java.util.List;
 
 import entities.Produit;
 
-public interface ProduitDao extends GenericDao<Produit, Serializable> {
+public interface ProduitDao extends GenericJpaDao<Produit, Serializable> {
 
 	List<Produit> findMinimalProductsByLibelle(String libelle);
 

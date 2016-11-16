@@ -54,13 +54,15 @@ public class GuideAPI {
 		} else
 			return Response.noContent().build();
 	}
-
+	
+	@Path("findAll")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAll() {
 		return Response.ok(guideService.findAll()).build();
 	}
 
+	@Path("findById")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

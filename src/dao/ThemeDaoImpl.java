@@ -11,7 +11,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import entities.Theme;
 
 @Stateless
-public class ThemeDaoImpl extends GenericDaoJpaImpl<Theme, Serializable> implements ThemeDao {
+public class ThemeDaoImpl extends GenericJpaDaoImpl<Theme, Serializable> implements ThemeDao {
 
 	@Override
 	public List<Theme> findByQuery(String query, Long limit) {
