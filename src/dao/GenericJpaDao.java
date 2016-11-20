@@ -1,13 +1,47 @@
 package dao;
-import java.io.Serializable;
 
-public interface GenericJpaDao<T, PK extends Serializable> {
-	T persist(T t);
+import java.util.List;
 
-	T find(PK id);
+import com.querydsl.jpa.impl.JPAQuery;
 
-	T merge(T t);
+public interface GenericJpaDao<E> {
 
-	void delete(T t);
-	
+
+    E findById(long id);
+
+
+    void persist(E entity);
+
+
+    void refresh(E entity);
+
+
+    E merge(E entity);
+    
+    void detach(E entity);
+
+
+    void remove(E entity);
+
+
+    List<E> findAll();
+
+
+    List<E> findAllOrderByAttributeAsc(String attributeName);
+
+
+    List<E> findAllOrderByAttributeDesc(String attributeName);
+
+
+    void flush();
+    
+    /**
+     * Méthode à redéfinir pour fetch joindre tous les @ToOne associés
+     * @param query
+     */
+    public default void addToOneEntityJoin(JPAQuery<?> query){
+        
+    }
+
+
 }

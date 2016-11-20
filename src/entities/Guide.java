@@ -18,8 +18,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonManagedReference;
-
 @Entity
 @Table(name = "GUIDE")
 public class Guide implements Serializable {
@@ -46,7 +44,7 @@ public class Guide implements Serializable {
 	@Column(name = "DATE_MODIFICATION")
 	private Date dateModification;
 	
-	@Column(name = "IMAGE_COUVERTURE", columnDefinition = "BLOB")
+	@Column(name = "IMAGE_COUVERTURE", columnDefinition = "LONGBLOB")
 	@Lob
 	private byte[] imageCouverture;
 	

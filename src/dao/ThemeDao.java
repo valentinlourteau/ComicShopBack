@@ -1,6 +1,5 @@
 package dao;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -8,9 +7,9 @@ import javax.ejb.Local;
 import entities.Theme;
 
 @Local
-public interface ThemeDao extends GenericJpaDao<Theme, Serializable> {
-	
-	public List<Theme> findByQuery(String query, Long limit);
+public interface ThemeDao extends GenericJpaDao<Theme> {
+
+	public List<Theme> findByQuery(String query);
 
 	public List<Theme> findAll();
 

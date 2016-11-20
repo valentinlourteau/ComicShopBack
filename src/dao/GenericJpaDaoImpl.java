@@ -1,62 +1,47 @@
 package dao;
 
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 
-import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
-
-import com.querydsl.core.Query;
-import com.querydsl.core.QueryFactory;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import misc.QueryDslEntities;
 
-public class GenericJpaDaoImpl<T, PK extends Serializable> implements GenericJpaDao<T, PK>, QueryDslEntities {
-	
-
-	protected Class<T> entityClass;
+public abstract class GenericJpaDaoImpl<E> implements GenericJpaDao<E>, QueryDslEntities {
 
 	@PersistenceContext
-	protected EntityManager entityManager;
-	
-	private JPAQueryFactory queryFactory;
+	protected EntityManager em;
 
-	public GenericJpaDaoImpl() {
-		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-		this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-		this.queryFactory = new JPAQueryFactory(entityManager);
-	}
-	
-	public JPAQueryFactory queryFactory() {
-		return this.queryFactory;
+	/**
+	 * Fabrique de requètes JPA A utiliser pour toute requète JPA QueryDSL
+	 * 
+	 * @return JPAQueryFactory
+	 */
+	protected JPAQueryFactory queryFactory() {
+		return new JPAQueryFactory(em);
 	}
 
-	@Override
-	public T persist(T t) {
-		this.entityManager.persist(t);
-		return t;
+	public void persist(E entity) {
+		em.persist(entity);
 	}
 
-	@Override
-	public T find(PK id) {
-		return this.entityManager.find(entityClass, id);
+	public void flush() {
+		em.flush();
 	}
 
 	@Override
-	public T merge(T t) {
-		return this.entityManager.merge(t);
+	public void remove(E entity) {
+		em.remove(em.contains(entity) ? entity : em.merge(entity));
 	}
 
 	@Override
-	public void delete(T t) {
-		t = this.entityManager.merge(t);
-		this.entityManager.remove(t);
+	public void refresh(E entity) {
+		em.refresh(entity);
+	}
+
+	@Override
+	public void detach(E entity) {
+		em.detach(entity);
 	}
 
 }

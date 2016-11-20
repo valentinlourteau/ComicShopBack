@@ -9,7 +9,7 @@ import entities.Theme;
 @Local
 public interface ThemeService {
 
-	List<Theme> findByQuery(String query, Long limit);
+	List<Theme> findByQuery(String query);
 
 	List<Theme> findAll();
 	

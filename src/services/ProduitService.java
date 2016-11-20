@@ -11,6 +11,8 @@ public interface ProduitService {
 
 	List<Produit> findMinimalProductsByLibelle(String libelle);
 
+	Produit findProductById(Integer id);
+
 	
 	
 }

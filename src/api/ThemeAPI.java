@@ -20,13 +20,13 @@ public class ThemeAPI {
 	@Inject
 	ThemeService themeService;
 	
-	@POST
+	@Path("findByLibelle")
+	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Theme> findByQuery(
-			@QueryParam("libelle") String libelle,
-			@QueryParam("limit") Integer limit) {
-		return themeService.findByQuery(libelle, new Long(limit));
+			@QueryParam("libelle") String libelle) {
+		return themeService.findByQuery(libelle);
 	}
 	
 	@GET

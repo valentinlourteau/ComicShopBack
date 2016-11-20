@@ -28,21 +28,25 @@ public class GuideAPI {
 	@Inject
 	ThemeService themeService;
 
+	@Path("create")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createGuide(Guide guide) {
 		guideService.persist(guide);
+		guide.setImageCouverture(null);
 		return Response.ok(guide).build();
 	}
 	
+	@Path("update")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateGuide(Guide guide,
-			@QueryParam("id") Long id) {
-		return null;
+	public Response mergeGuide(Guide guide) {
+		guideService.merge(guide);
+		return Response.ok(guide).build();
 	}
 	
+	@Path("delete")
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -61,6 +65,14 @@ public class GuideAPI {
 	public Response findAll() {
 		return Response.ok(guideService.findAll()).build();
 	}
+	
+	@Path("findAllTitlesAndPictures")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findAllsWithPictureAndTitle() {
+		return Response.ok(guideService.findAllsWithPictureAndTitle()).build();
+	}
+	
 
 	@Path("findById")
 	@GET

@@ -2,7 +2,6 @@ package services;
 
 import java.util.List;
 
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -16,8 +15,8 @@ public class ThemeServiceImpl implements ThemeService {
 	ThemeDao themeDao;
 
 	@Override
-	public List<Theme> findByQuery(String query, Long limit) {
-		return themeDao.findByQuery(query, limit);
+	public List<Theme> findByQuery(String query) {
+		return themeDao.findByQuery(query);
 	}
 
 	@Override
@@ -27,7 +26,7 @@ public class ThemeServiceImpl implements ThemeService {
 
 	@Override
 	public Theme findById(Long id) {
-		return themeDao.find(id);
+		return themeDao.findById(id);
 	}
 
 }

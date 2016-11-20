@@ -20,4 +20,8 @@ public interface GuideService {
 
 	public List<Guide> findAllByTheme(Theme theme);
 
+	public void merge(Guide guide);
+
+	public List<Guide> findAllsWithPictureAndTitle();
+
 }
