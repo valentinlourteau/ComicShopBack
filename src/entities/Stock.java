@@ -18,10 +18,8 @@ public class Stock implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "STOCK_EAN")
-	@Type(type = "string") 
-	private Long ean;
+	@Column(name = "STOCK_EAN") 
+	private String ean;
 	
 	@Column(name = "STOCK_QTE")
 	private Integer quantite;
@@ -34,11 +32,11 @@ public class Stock implements Serializable {
 		this.quantite = quantite;
 	}
 
-	public Long getEan() {
+	public String getEan() {
 		return ean;
 	}
 
-	public void setEan(Long ean) {
+	public void setEan(String ean) {
 		this.ean = ean;
 	}
 
