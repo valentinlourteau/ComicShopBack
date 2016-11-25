@@ -29,4 +29,14 @@ public class ThemeServiceImpl implements ThemeService {
 		return themeDao.findById(id);
 	}
 
+	@Override
+	public void create(List<Theme> themes) {
+		themes.forEach(theme -> {
+			if (theme.getId() == null) {
+				themeDao.persist(theme);
+			}
+		});
+		themeDao.flush();
+	}
+
 }

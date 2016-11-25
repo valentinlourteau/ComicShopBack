@@ -1,27 +1,31 @@
-//package dao;
-//
-//import java.io.Serializable;
-//
-//import javax.ejb.Stateless;
-//
-//import com.querydsl.jpa.impl.JPAQuery;
-//
-//import entities.User;
-//
-//@Stateless
-//public class UserDaoImpl extends GenericDaoJpaImpl<User, Serializable> implements UserDao {
-//
-//	@Override
-//	public User findBy(Long ApiUserId) {
-//		JPAQuery<?> query = new JPAQuery<>(entityManager);
-//		return query.select(USER).from(USER).where(USER.id.eq(ApiUserId)).fetchOne();
-//	}
-//
-//	@Override
-//	public User findBy(String username, String pwd) {
-//		JPAQuery<?> query = new JPAQuery<>(entityManager);
-//		return query.select(USER).from(USER).where(USER.username.eq(username).and(USER.pwd.eq(pwd)))
-//				.fetchOne();
-//	}
-//
-//}
+package dao;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.ejb.Stateless;
+
+import com.querydsl.jpa.impl.JPAQuery;
+
+import entities.User;
+
+@Stateless
+public class UserDaoImpl extends GenericJpaDaoImpl<User> implements UserDao {
+
+	@Override
+	public User findBy(String username, String pwd) {
+		return queryFactory().selectFrom(USER).where(USER.username.eq(username).and(USER.pwd.eq(pwd))).fetchOne();
+	}
+
+	@Override
+	public User findById(long id) {
+		return queryFactory().selectFrom(USER).where(USER.id.eq(id)).fetchOne();
+	}
+
+	@Override
+	public List<User> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

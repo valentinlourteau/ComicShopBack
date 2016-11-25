@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,9 +18,14 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "GUIDE")
+@Table(name = "guide")
 public class Guide implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -32,8 +38,11 @@ public class Guide implements Serializable {
 	@Column(name = "TITRE")
 	private String titre;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "guide", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<ProduitsCommentaires> produitsCommentaires;
+//	@OneToMany(mappedBy = "guide", cascade = CascadeType.REMOVE)
+//	private Set<ProduitCommentaire> produitsCommentaires;
+	
+	@Transient
+	private Set<ProduitCommentaire> produitsCommentaires;
 
 	@Column(name = "B_VISIBLE", columnDefinition = "TINYINT")
 	private Boolean bVisible;
@@ -44,13 +53,13 @@ public class Guide implements Serializable {
 	@Column(name = "DATE_MODIFICATION")
 	private Date dateModification;
 	
-	@Column(name = "IMAGE_COUVERTURE", columnDefinition = "LONGBLOB")
+	@Column(name = "IMAGE_COUVERTURE", columnDefinition = "longblob")
 	@Lob
 	private byte[] imageCouverture;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinTable(
-		      name="GUIDE_THEME",
+		      name="guide_theme",
 		      joinColumns=@JoinColumn(name="GUIDE_ID", referencedColumnName="GUIDE_ID"),
 		      inverseJoinColumns=@JoinColumn(name="THEME_ID", referencedColumnName="THEME_ID"))
 	private List<Theme> themes;
@@ -87,14 +96,6 @@ public class Guide implements Serializable {
 		this.titre = titre;
 	}
 
-	public List<ProduitsCommentaires> getProduitsCommentaires() {
-		return produitsCommentaires;
-	}
-
-	public void setProduitsCommentaires(List<ProduitsCommentaires> produitsCommentaires) {
-		this.produitsCommentaires = produitsCommentaires;
-	}
-
 	public Date getDateModification() {
 		return dateModification;
 	}
@@ -111,12 +112,28 @@ public class Guide implements Serializable {
 		this.imageCouverture = imageCouverture;
 	}
 
+//	public Set<ProduitCommentaire> getProduitsCommentaires() {
+//		return produitsCommentaires;
+//	}
+//
+//	public void setProduitsCommentaires(Set<ProduitCommentaire> produitsCommentaires) {
+//		this.produitsCommentaires = produitsCommentaires;
+//	}
+
 	public List<Theme> getThemes() {
 		return themes;
 	}
 
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
+	}
+
+	public Set<ProduitCommentaire> getProduitsCommentaires() {
+		return produitsCommentaires;
+	}
+
+	public void setProduitsCommentaires(Set<ProduitCommentaire> produitsCommentaires) {
+		this.produitsCommentaires = produitsCommentaires;
 	}
 
 }

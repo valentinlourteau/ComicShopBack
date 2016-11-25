@@ -12,13 +12,15 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "STOCK")
+@Table(name = "stock")
 public class Stock implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "STOCK_EAN") 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "STOCK_EAN")
+	@Type(type = "string") 
 	private String ean;
 	
 	@Column(name = "STOCK_QTE")

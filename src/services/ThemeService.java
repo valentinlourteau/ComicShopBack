@@ -15,4 +15,6 @@ public interface ThemeService {
 	
 	Theme findById(Long id);
 
+	void create(List<Theme> themes);
+
 }

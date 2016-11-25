@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import dao.ProduitDao;
 import dao.StockDao;
 import entities.Produit;
-import entities.Stock;
 
 @Stateless
 public class ProduitServiceImpl implements ProduitService {
@@ -26,7 +25,7 @@ public class ProduitServiceImpl implements ProduitService {
 
 	@Override
 	public Produit findProductById(Integer id) {
-		Produit produit = produitDao.findProductById(id);
+		Produit produit = produitDao.findBy(id);
 		produit.setStock(stockDao.findByEan(produit.getEan()));
 		return produit;
 	}

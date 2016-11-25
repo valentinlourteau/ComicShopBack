@@ -10,13 +10,12 @@ import entities.Stock;
 public class StockDaoImpl extends GenericJpaDaoImpl<Stock> implements StockDao {
 
 	@Override
-	public Stock findById(long id) {
-//		
-		return null;
+	public Stock findByEan(String ean) {
+		return queryFactory().selectFrom(STOCK).where(STOCK.ean.eq(ean)).fetchOne();
 	}
 
 	@Override
-	public Stock merge(Stock entity) {
+	public Stock findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -25,26 +24,6 @@ public class StockDaoImpl extends GenericJpaDaoImpl<Stock> implements StockDao {
 	public List<Stock> findAll() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public List<Stock> findAllOrderByAttributeAsc(String attributeName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Stock> findAllOrderByAttributeDesc(String attributeName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Stock findByEan(String ean) {
-		return queryFactory()
-				.selectFrom(STOCK)
-				.where(STOCK.ean.eq(ean))
-				.fetchOne();
 	}
 
 }

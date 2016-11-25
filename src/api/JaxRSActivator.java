@@ -11,6 +11,7 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/")
 public class JaxRSActivator extends Application {
 	
+	
 	public JaxRSActivator() {
 	}
 	
@@ -21,6 +22,7 @@ public class JaxRSActivator extends Application {
 	    classes.add(GuideAPI.class);
 	    classes.add(ThemeAPI.class);
 	    classes.add(ProduitAPI.class);
+	    classes.add(ProduitsCommentairesAPI.class);
 	    return classes;
 	}
 

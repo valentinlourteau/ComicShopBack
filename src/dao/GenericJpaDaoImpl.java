@@ -21,10 +21,12 @@ public abstract class GenericJpaDaoImpl<E> implements GenericJpaDao<E>, QueryDsl
 		return new JPAQueryFactory(em);
 	}
 
+	@Override
 	public void persist(E entity) {
 		em.persist(entity);
 	}
 
+	@Override
 	public void flush() {
 		em.flush();
 	}
@@ -42,6 +44,12 @@ public abstract class GenericJpaDaoImpl<E> implements GenericJpaDao<E>, QueryDsl
 	@Override
 	public void detach(E entity) {
 		em.detach(entity);
+	}
+	
+	@Override
+	public E merge(E entity) {
+		em.merge(entity);
+		return entity;
 	}
 
 }

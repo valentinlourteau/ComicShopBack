@@ -12,13 +12,14 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "PRODUITS")
+@Table(name = "produits")
 public class Produit implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "PROD_ID")
+	@Column(name = "PROD_ID", columnDefinition = "INT(11)")
+	@Type(type = "integer")
 	private Integer id;
 	
 	@Column(name = "PROD_PRIXHT")
@@ -36,12 +37,16 @@ public class Produit implements Serializable {
 	@Column(name = "PROD_TITRE_SECONDAIRE")
 	private String titreSecondaire;
 	
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "PROD_EAN", referencedColumnName = "STOCK_EAN")
+//	private Stock stock;
+	
 	@Column(name = "PROD_EAN")
 	private String ean;
 	
 	@Transient
 	private Stock stock;
-
+	
 	public BigDecimal getPrixHt() {
 		return prixHt;
 	}
@@ -82,6 +87,14 @@ public class Produit implements Serializable {
 		this.titreSecondaire = titreSecondaire;
 	}
 
+	public String getEan() {
+		return ean;
+	}
+
+	public void setEan(String ean) {
+		this.ean = ean;
+	}
+
 	public Stock getStock() {
 		return stock;
 	}
@@ -96,14 +109,6 @@ public class Produit implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getEan() {
-		return ean;
-	}
-
-	public void setEan(String ean) {
-		this.ean = ean;
 	}
 	
 }

@@ -13,12 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 @Entity
-@Table(name = "PRODUITS_COMMENTAIRES")
-public class ProduitsCommentaires implements Serializable {
+@Table(name = "produits_commentaires")
+public class ProduitCommentaire implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,15 +23,15 @@ public class ProduitsCommentaires implements Serializable {
 	@Column(name = "PRODUIT_COMMENTAIRE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@OneToOne
+
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRODUIT_ID", columnDefinition = "BIGINT(11)")
 	private Produit produit;
-	
+
 	@Column(name = "COMMENTAIRE")
 	private String commentaire;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+
+	@ManyToOne()
 	@JoinColumn(name = "GUIDE_ID", columnDefinition = "BIGINT(11)")
 	private Guide guide;
 
@@ -54,20 +51,20 @@ public class ProduitsCommentaires implements Serializable {
 		this.produit = produit;
 	}
 
-	public Guide getGuide() {
-		return guide;
-	}
-
-	public void setGuide(Guide guide) {
-		this.guide = guide;
-	}
-
 	public String getCommentaire() {
 		return commentaire;
 	}
 
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
+	}
+
+	public Guide getGuide() {
+		return guide;
+	}
+
+	public void setGuide(Guide guide) {
+		this.guide = guide;
 	}
 
 }
