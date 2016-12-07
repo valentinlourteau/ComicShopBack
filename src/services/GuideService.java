@@ -34,4 +34,6 @@ public interface GuideService {
 
 	public Set<ProduitCommentaire> findProduitsCommentairesByGuideId(Long id);
 
+	public ProduitCommentaire findProduitCommentaireById(Long id);
+
 }

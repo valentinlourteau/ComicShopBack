@@ -141,6 +141,11 @@ public class GuideAPI {
 		return Response.ok(guide).build();
 	}
 
+	/**
+	 * permet de récupérer un guide par son thème
+	 * @param id
+	 * @return
+	 */
 	@Path("findByTheme")
 	@GET
 	public Response findByTheme(@QueryParam("id") Long id) {

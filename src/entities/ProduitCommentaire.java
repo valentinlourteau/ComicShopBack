@@ -9,9 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "produits_commentaires")
@@ -24,14 +27,15 @@ public class ProduitCommentaire implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUIT_ID", columnDefinition = "BIGINT(11)")
 	private Produit produit;
 
-	@Column(name = "COMMENTAIRE")
+	@Column(name = "COMMENTAIRE", columnDefinition = "longtext")
+	@Lob
 	private String commentaire;
 
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "GUIDE_ID", columnDefinition = "BIGINT(11)")
 	private Guide guide;
 
@@ -59,6 +63,7 @@ public class ProduitCommentaire implements Serializable {
 		this.commentaire = commentaire;
 	}
 
+	@JsonIgnore
 	public Guide getGuide() {
 		return guide;
 	}

@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.Type;
 
@@ -38,12 +39,14 @@ public class Guide implements Serializable {
 	@Column(name = "TITRE")
 	private String titre;
 
-//	@OneToMany(mappedBy = "guide", cascade = CascadeType.REMOVE)
-//	private Set<ProduitCommentaire> produitsCommentaires;
 	
+	/**
+	 * TODO faire mieux que ça, trouver une solution autre 
+	 * pour résoudre les problème de lazy et de stack overflow
+	 */
 	@Transient
 	private Set<ProduitCommentaire> produitsCommentaires;
-
+	
 	@Column(name = "B_VISIBLE", columnDefinition = "TINYINT")
 	private Boolean bVisible;
 	
@@ -57,7 +60,7 @@ public class Guide implements Serializable {
 	@Lob
 	private byte[] imageCouverture;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(
 		      name="guide_theme",
 		      joinColumns=@JoinColumn(name="GUIDE_ID", referencedColumnName="GUIDE_ID"),
@@ -111,15 +114,7 @@ public class Guide implements Serializable {
 	public void setImageCouverture(byte[] imageCouverture) {
 		this.imageCouverture = imageCouverture;
 	}
-
-//	public Set<ProduitCommentaire> getProduitsCommentaires() {
-//		return produitsCommentaires;
-//	}
-//
-//	public void setProduitsCommentaires(Set<ProduitCommentaire> produitsCommentaires) {
-//		this.produitsCommentaires = produitsCommentaires;
-//	}
-
+	
 	public List<Theme> getThemes() {
 		return themes;
 	}
@@ -127,6 +122,14 @@ public class Guide implements Serializable {
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
 	}
+//
+//	public Set<ProduitCommentaire> getProduitsCommentaires() {
+//		return produitsCommentaires;
+//	}
+//
+//	public void setProduitsCommentaires(Set<ProduitCommentaire> produitsCommentaires) {
+//		this.produitsCommentaires = produitsCommentaires;
+//	}
 
 	public Set<ProduitCommentaire> getProduitsCommentaires() {
 		return produitsCommentaires;

@@ -3,21 +3,27 @@ package api;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import entities.ProduitCommentaire;
 import services.GuideService;
+import services.ProduitService;
 
 @Path("ProduitCommentaire")
 public class ProduitsCommentairesAPI {
 
 	@Inject
 	GuideService guideService;
+
+	@Inject
+	ProduitService produitService;
 
 	@Path("create")
 	@POST
@@ -45,6 +51,15 @@ public class ProduitsCommentairesAPI {
 		guideService.delete(produitCommentaire);
 		return Response.ok(produitCommentaire).build();
 
+	}
+
+	@Path("findById")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findById(@QueryParam("id") Long id) {
+		ProduitCommentaire prodCum = guideService.findProduitCommentaireById(id);
+		prodCum.getProduit().setStock(produitService.findStockByEan(prodCum.getProduit().getEan()));
+		return Response.ok(prodCum).build();
 	}
 
 }

@@ -12,8 +12,8 @@ public class ProduitCommentaireDaoImpl extends GenericJpaDaoImpl<ProduitCommenta
 
 	@Override
 	public ProduitCommentaire findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return queryFactory().selectFrom(PRODUIT_COMMENTAIRE)
+			.where(PRODUIT_COMMENTAIRE.id.eq(id)).fetchOne();
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class ProduitCommentaireDaoImpl extends GenericJpaDaoImpl<ProduitCommenta
 	public List<ProduitCommentaire> findByGuideId(Long id) {
 		return queryFactory().selectFrom(PRODUIT_COMMENTAIRE)
 				.where(PRODUIT_COMMENTAIRE.guide.id.eq(id))
-				.leftJoin(PRODUIT_COMMENTAIRE.produit, PRODUIT).fetchJoin()
+//				.leftJoin(PRODUIT_COMMENTAIRE.produit, PRODUIT).fetchJoin()
 				.distinct()
 				.fetch();
 	}

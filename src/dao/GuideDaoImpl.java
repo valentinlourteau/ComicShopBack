@@ -17,7 +17,7 @@ public class GuideDaoImpl extends GenericJpaDaoImpl<Guide> implements GuideDao {
 		return queryFactory().selectFrom(GUIDE)
 //				.leftJoin(GUIDE.produitsCommentaires, PRODUIT_COMMENTAIRE).fetchJoin()
 //				.leftJoin(PRODUIT_COMMENTAIRE.produit, PRODUIT).fetchJoin()
-				.leftJoin(GUIDE.themes, THEME).fetchJoin()
+//				.leftJoin(GUIDE.themes, THEME).fetchJoin()
 				.distinct()
 				.fetch();
 	}
@@ -35,7 +35,7 @@ public class GuideDaoImpl extends GenericJpaDaoImpl<Guide> implements GuideDao {
 		return queryFactory().selectFrom(GUIDE).where(GUIDE.id.eq(id))
 //				.leftJoin(GUIDE.produitsCommentaires, PRODUIT_COMMENTAIRE).fetchJoin()
 //				.leftJoin(PRODUIT_COMMENTAIRE.produit, PRODUIT).fetchJoin()
-				.leftJoin(GUIDE.themes, THEME).fetchJoin()
+//				.leftJoin(GUIDE.themes, THEME).fetchJoin()
 				.fetchOne();
 	}
 

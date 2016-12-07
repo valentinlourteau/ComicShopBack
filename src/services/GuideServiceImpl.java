@@ -84,4 +84,9 @@ public class GuideServiceImpl implements GuideService {
 		return new HashSet<>(produitCommentaireDao.findByGuideId(id));
 	}
 
+	@Override
+	public ProduitCommentaire findProduitCommentaireById(Long id) {
+		return produitCommentaireDao.findById(id);
+	}
+
 }

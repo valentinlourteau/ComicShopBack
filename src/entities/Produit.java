@@ -5,7 +5,10 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -37,7 +40,7 @@ public class Produit implements Serializable {
 	@Column(name = "PROD_TITRE_SECONDAIRE")
 	private String titreSecondaire;
 	
-//	@OneToOne(fetch = FetchType.LAZY)
+//	@OneToOne(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "PROD_EAN", referencedColumnName = "STOCK_EAN")
 //	private Stock stock;
 	
@@ -95,13 +98,13 @@ public class Produit implements Serializable {
 		this.ean = ean;
 	}
 
-	public Stock getStock() {
-		return stock;
-	}
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
-	}
+//	public Stock getStock() {
+//		return stock;
+//	}
+//
+//	public void setStock(Stock stock) {
+//		this.stock = stock;
+//	}
 
 	public Integer getId() {
 		return id;
@@ -109,6 +112,14 @@ public class Produit implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 	
 }
