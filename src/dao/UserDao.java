@@ -9,6 +9,6 @@ import entities.User;
 @Local
 public interface UserDao extends GenericJpaDao<User> {
 	
-	public User findBy(String username, String pwd);
+	public User findBy(String email, String pwd);
 
 }

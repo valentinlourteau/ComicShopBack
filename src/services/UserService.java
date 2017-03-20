@@ -9,7 +9,7 @@ public interface UserService {
 	
 	public User findBy(Long id);
 	
-	public User findBy(String username, String pwd);
+	public User findBy(String email, String pwd);
 
 	public String hashPassword(String pwd);
 

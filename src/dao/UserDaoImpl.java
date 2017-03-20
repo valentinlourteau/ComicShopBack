@@ -13,8 +13,8 @@ import entities.User;
 public class UserDaoImpl extends GenericJpaDaoImpl<User> implements UserDao {
 
 	@Override
-	public User findBy(String username, String pwd) {
-		return queryFactory().selectFrom(USER).where(USER.username.eq(username).and(USER.pwd.eq(pwd))).fetchOne();
+	public User findBy(String email, String pwd) {
+		return queryFactory().selectFrom(USER).where(USER.email.eq(email).and(USER.pwd.eq(pwd))).fetchOne();
 	}
 
 	@Override

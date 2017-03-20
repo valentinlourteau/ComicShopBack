@@ -2,48 +2,29 @@ package entities;
 
 import java.io.Serializable;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
-public class User implements Serializable {
+@Table(name = "user")
+@PrimaryKeyJoinColumn(name = "USER_ID")
+public class User extends Personne implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name = "USER_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@Column(name = "USERNAME")
 	private String username;
 
 	@Column(name = "PASSWORD", nullable = false)
 	private String pwd;
-
-	@Column(name = "AGE")
-	private Integer age;
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
+	@Column(name = "EMAIL")
+	private String email;
 
 	public String getUsername() {
 		return username;
@@ -59,6 +40,14 @@ public class User implements Serializable {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

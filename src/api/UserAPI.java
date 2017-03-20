@@ -1,6 +1,7 @@
 package api;
 
 import javax.inject.Inject;
+import javax.jdo.annotations.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,11 +10,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.StatusType;
 
 import entities.User;
 import services.UserService;
 
 @Path("User")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class UserAPI {
 
 	@Inject
@@ -43,5 +48,23 @@ public class UserAPI {
 		else
 			return Response.ok(user).build();
 	}
+	
+	@Path("authenticate")
+	@POST
+	public Response authenticateUser(User toTest) {
+		User user = null;
+		if (toTest.getEmail() == null)
+			return Response.status(Status.NOT_ACCEPTABLE).entity(new String("Erreur, email introuvable")).build();
+		else if (toTest.getPwd() == null)
+			return Response.status(Status.NOT_ACCEPTABLE).entity(new String("Erreur, email introuvable")).build();
+		else
+			user = userService.findBy(toTest.getEmail(), toTest.getPwd());
+		if (user != null)
+			return Response.status(Status.OK).entity(user).build();
+		else
+			return Response.status(Status.NOT_FOUND).build();
+			
+				
+			}
 
 }

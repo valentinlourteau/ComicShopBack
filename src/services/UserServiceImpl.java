@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findBy(String username, String pwd) {
-		return userDao.findBy(username, pwd);
+	public User findBy(String email, String pwd) {
+		return userDao.findBy(email, hashPassword(pwd));
 	}
 
 	@Override
