@@ -64,7 +64,7 @@ public class ProduitsCommentairesAPI {
 		ProduitCommentaire prodCum = guideService.findProduitCommentaireById(id);
 		if (prodCum.getProduit() != null)
 			prodCum.getProduit().setStock(produitService.findStockByEan(prodCum.getProduit().getEan()));
-		return Response.ok(GsonFactory.getInstance(Produit.class).toJson(prodCum)).build();
+		return Response.ok(prodCum).build();
 	}
 
 }

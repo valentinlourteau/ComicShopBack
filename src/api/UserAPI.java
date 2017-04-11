@@ -1,7 +1,6 @@
 package api;
 
 import javax.inject.Inject;
-import javax.jdo.annotations.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,14 +10,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.StatusType;
 
 import entities.User;
 import services.UserService;
 
 @Path("User")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
 public class UserAPI {
 
 	@Inject
@@ -29,7 +25,9 @@ public class UserAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(User user) {
-		User newUser = userService.findBy(user.getUsername(), userService.hashPassword(user.getPwd()));
+		if (!userService.checkMandatoryFieldsAreFilled(user))
+			return Response.notModified().entity("Veuillez renseigner tout les champs obligatoires").build();
+		User newUser = userService.findBy(user.getEmail());
 		if (newUser == null) {
 			user.setPwd(userService.hashPassword(user.getPwd()));
 			userService.persist(user);
@@ -40,6 +38,7 @@ public class UserAPI {
 
 	@Path("findById")
 	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findUser(@QueryParam("id") Long id) {
 		User user = userService.findBy(id);
@@ -51,19 +50,20 @@ public class UserAPI {
 	
 	@Path("authenticate")
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(User toTest) {
 		User user = null;
 		if (toTest.getEmail() == null)
 			return Response.status(Status.NOT_ACCEPTABLE).entity(new String("Erreur, email introuvable")).build();
 		else if (toTest.getPwd() == null)
-			return Response.status(Status.NOT_ACCEPTABLE).entity(new String("Erreur, email introuvable")).build();
+			return Response.status(Status.NOT_ACCEPTABLE).entity(new String("Erreur, pwd introuvable")).build();
 		else
 			user = userService.findBy(toTest.getEmail(), toTest.getPwd());
 		if (user != null)
 			return Response.status(Status.OK).entity(user).build();
 		else
-			return Response.status(Status.NOT_FOUND).build();
-			
+			return Response.status(Status.NOT_FOUND).build();		
 				
 			}
 

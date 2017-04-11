@@ -1,12 +1,11 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -25,6 +24,9 @@ public class User extends Personne implements Serializable {
 	
 	@Column(name = "EMAIL")
 	private String email;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Abonnement> abonnements;
 
 	public String getUsername() {
 		return username;

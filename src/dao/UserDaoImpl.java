@@ -28,4 +28,9 @@ public class UserDaoImpl extends GenericJpaDaoImpl<User> implements UserDao {
 		return null;
 	}
 
+	@Override
+	public User findBy(String email) {
+		return queryFactory().selectFrom(USER).where(USER.email.eq(email)).fetchOne();
+	}
+
 }

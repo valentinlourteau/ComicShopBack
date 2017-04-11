@@ -23,6 +23,7 @@ public class JaxRSActivator extends Application {
 	    classes.add(ThemeAPI.class);
 	    classes.add(ProduitAPI.class);
 	    classes.add(ProduitsCommentairesAPI.class);
+	    classes.add(SerieAPI.class);
 	    return classes;
 	}
 

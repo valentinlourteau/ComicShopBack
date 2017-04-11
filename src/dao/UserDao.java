@@ -11,4 +11,6 @@ public interface UserDao extends GenericJpaDao<User> {
 	
 	public User findBy(String email, String pwd);
 
+	public User findBy(String email);
+
 }

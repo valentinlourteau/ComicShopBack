@@ -15,4 +15,8 @@ public interface UserService {
 
 	public void persist(User user);
 
+	public User findBy(String email);
+
+	public boolean checkMandatoryFieldsAreFilled(User user);
+
 }
