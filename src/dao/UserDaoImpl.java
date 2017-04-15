@@ -1,11 +1,10 @@
 package dao;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
 
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.core.types.Projections;
 
 import entities.User;
 
@@ -24,8 +23,9 @@ public class UserDaoImpl extends GenericJpaDaoImpl<User> implements UserDao {
 
 	@Override
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		// return null;
+		return queryFactory().select(Projections.bean(USER, USER.id, USER.prenom, USER.nom, USER.email)).from(USER)
+				.fetch();
 	}
 
 	@Override

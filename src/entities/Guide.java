@@ -18,19 +18,17 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonManagedReference;
-import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "guide")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Guide implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@Column(name = "GUIDE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +37,14 @@ public class Guide implements Serializable {
 	@Column(name = "TITRE")
 	private String titre;
 
+	@Column(name = "RESUME")
+	private String resume;
 	
 	/**
 	 * TODO faire mieux que ça, trouver une solution autre 
 	 * pour résoudre les problème de lazy et de stack overflow
 	 */
-	@Transient
+	@OneToMany(mappedBy = "guide", fetch = FetchType.EAGER)
 	private Set<ProduitCommentaire> produitsCommentaires;
 	
 	@Column(name = "B_VISIBLE", columnDefinition = "TINYINT")
@@ -75,6 +75,30 @@ public class Guide implements Serializable {
 		this.id = id;
 	}
 
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public String getResume() {
+		return resume;
+	}
+
+	public void setResume(String resume) {
+		this.resume = resume;
+	}
+
+	public Set<ProduitCommentaire> getProduitsCommentaires() {
+		return produitsCommentaires;
+	}
+
+	public void setProduitsCommentaires(Set<ProduitCommentaire> produitsCommentaires) {
+		this.produitsCommentaires = produitsCommentaires;
+	}
+
 	public Boolean getbVisible() {
 		return bVisible;
 	}
@@ -89,14 +113,6 @@ public class Guide implements Serializable {
 
 	public void setDatePublication(Date datePublication) {
 		this.datePublication = datePublication;
-	}
-
-	public String getTitre() {
-		return titre;
-	}
-
-	public void setTitre(String titre) {
-		this.titre = titre;
 	}
 
 	public Date getDateModification() {
@@ -114,29 +130,13 @@ public class Guide implements Serializable {
 	public void setImageCouverture(byte[] imageCouverture) {
 		this.imageCouverture = imageCouverture;
 	}
-	
+
 	public List<Theme> getThemes() {
 		return themes;
 	}
 
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
-	}
-//
-//	public Set<ProduitCommentaire> getProduitsCommentaires() {
-//		return produitsCommentaires;
-//	}
-//
-//	public void setProduitsCommentaires(Set<ProduitCommentaire> produitsCommentaires) {
-//		this.produitsCommentaires = produitsCommentaires;
-//	}
-
-	public Set<ProduitCommentaire> getProduitsCommentaires() {
-		return produitsCommentaires;
-	}
-
-	public void setProduitsCommentaires(Set<ProduitCommentaire> produitsCommentaires) {
-		this.produitsCommentaires = produitsCommentaires;
 	}
 
 }

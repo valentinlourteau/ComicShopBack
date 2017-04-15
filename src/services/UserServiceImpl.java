@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -44,6 +46,21 @@ public class UserServiceImpl implements UserService {
 		if (user == null || user.getEmail() == null || user.getPrenom() == null || user.getNom() == null || user.getPwd() == null)
 			return false;
 		return true;
+	}
+
+	@Override
+	public List<User> findAll() {
+		return userDao.findAll();
+	}
+
+	@Override
+	public boolean verifyPwd(String oldPassword, String pwd) {
+		return Crypter.withMD5(oldPassword).equals(pwd) ? true : false;
+	}
+
+	@Override
+	public void merge(User user) {
+		userDao.merge(user);
 	}
 	
 }

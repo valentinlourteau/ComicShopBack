@@ -10,8 +10,10 @@ import entities.User;
 @Local
 public interface SerieDao extends GenericJpaDao<Serie> {
 
-	boolean checkDoublon(String titre);
+	long checkDoublon(String titre);
 
 	List<User> findAllUserWhichSuscribedToTheSerie(Long serieId);
+
+	List<Serie> findAllSerieWhichAreSuscribedByTheUser(Long userId);
 
 }

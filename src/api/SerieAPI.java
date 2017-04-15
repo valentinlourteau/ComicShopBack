@@ -64,14 +64,18 @@ public class SerieAPI {
 	@Path("suscribe")
 	public Response suscribe(@QueryParam("userId")Long userId,@QueryParam("serieId")Long serieId) {
 		Abonnement abonnement = serieService.suscribeToASerie(userId, serieId);
-		return Response.ok(abonnement).build();
+		if (abonnement == null)
+			return Response.notModified().entity("Erreur lors de la création de l'abonnement, doublon possible").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("unsuscribe")
 	public Response unsuscribe(@QueryParam("userId")Long userId,@QueryParam("serieId")Long serieId) {
-		return null;
-
+		boolean success = serieService.unsuscribe(userId, serieId);
+		if (success)
+			return Response.ok().build();
+		return Response.notModified().build();
 	}
 	
 	@GET
@@ -84,6 +88,12 @@ public class SerieAPI {
 	@Path("findAllUserBySerieId")
 	public Response findAllUserBySerieId(@QueryParam("serieId") Long serieId) {
 		return Response.ok(serieDao.findAllUserWhichSuscribedToTheSerie(serieId)).build();
+	}
+	
+	@GET
+	@Path("findAllSerieByUserId")
+	public Response findAllSerieByUserId(@QueryParam("userId") Long userId) {
+		return Response.ok(serieDao.findAllSerieWhichAreSuscribedByTheUser(userId)).build();
 	}
 
 }

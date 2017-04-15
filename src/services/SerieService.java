@@ -16,4 +16,6 @@ public interface SerieService {
 
 	Abonnement suscribeToASerie(Long userId, Long serieId);
 
+	boolean unsuscribe(Long userId, Long serieId);
+
 }

@@ -14,38 +14,25 @@ public class GuideDaoImpl extends GenericJpaDaoImpl<Guide> implements GuideDao {
 
 	@Override
 	public List<Guide> findAll() {
-		return queryFactory().selectFrom(GUIDE)
-//				.leftJoin(GUIDE.produitsCommentaires, PRODUIT_COMMENTAIRE).fetchJoin()
-//				.leftJoin(PRODUIT_COMMENTAIRE.produit, PRODUIT).fetchJoin()
-//				.leftJoin(GUIDE.themes, THEME).fetchJoin()
-				.distinct()
-				.fetch();
+		return queryFactory().selectFrom(GUIDE).fetch();
 	}
 
 	@Override
 	public List<Guide> findAllByTheme(Theme theme) {
 		return queryFactory().selectFrom(GUIDE).where(GUIDE.themes.contains(theme))
-//				.leftJoin(GUIDE.produitsCommentaires, PRODUIT_COMMENTAIRE).fetchJoin()
-//				.leftJoin(PRODUIT_COMMENTAIRE.guide).fetchJoin()
 				.leftJoin(GUIDE.themes, THEME).fetchJoin().fetch();
 	}
 
 	@Override
 	public Guide findById(long id) {
 		return queryFactory().selectFrom(GUIDE).where(GUIDE.id.eq(id))
-//				.leftJoin(GUIDE.produitsCommentaires, PRODUIT_COMMENTAIRE).fetchJoin()
-//				.leftJoin(PRODUIT_COMMENTAIRE.produit, PRODUIT).fetchJoin()
-//				.leftJoin(GUIDE.themes, THEME).fetchJoin()
 				.fetchOne();
 	}
 
 	@Override
 	public List<Guide> findAllsWithPictureAndTitle() {
-		return queryFactory().select(Projections.fields(
-				Guide.class,
-				GUIDE.id,
-				GUIDE.titre,
-				GUIDE.imageCouverture).as(GUIDE))
+		return queryFactory()
+				.select(Projections.bean(GUIDE, GUIDE.id, GUIDE.titre, GUIDE.imageCouverture, GUIDE.resume, GUIDE.bVisible))
 				.from(GUIDE).fetch();
 
 	}

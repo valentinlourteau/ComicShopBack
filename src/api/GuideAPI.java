@@ -39,8 +39,8 @@ public class GuideAPI {
 	 * 
 	 * @param guide
 	 *            le guide à persister en base
-	 * @return le guide crée avec l'image de couverture définie à null pour les
-	 *         performances
+	 * @return le guide crée avec l'image de couverture définie à null pour
+	 *         les performances
 	 */
 	@Path("create")
 	@POST
@@ -104,19 +104,16 @@ public class GuideAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAll() {
 		List<Guide> guides = guideService.findAll();
-		guides.forEach(guide -> {
-			guide.setProduitsCommentaires(guideService.findProduitsCommentairesByGuideId(guide.getId()));
-		});
 		return Response.ok(guides).build();
 	}
 
 	/**
-	 * Permet de récupérer une liste de guide en ne récupérant que l'id, l'image
-	 * de couverture et le titre
+	 * Permet de récupérer une liste de guide en ne récupérant que l'id,
+	 * l'image de couverture et le titre
 	 * 
 	 * @return
 	 */
-	@Path("findAllTitlesAndPictures")
+	@Path("findAllReduced")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAllsWithPictureAndTitle() {
@@ -143,6 +140,7 @@ public class GuideAPI {
 
 	/**
 	 * permet de r�cup�rer un guide par son th�me
+	 * 
 	 * @param id
 	 * @return
 	 */

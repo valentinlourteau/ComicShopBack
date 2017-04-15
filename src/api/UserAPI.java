@@ -13,8 +13,11 @@ import javax.ws.rs.core.Response.Status;
 
 import entities.User;
 import services.UserService;
+import utils.Crypter;
 
 @Path("User")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class UserAPI {
 
 	@Inject
@@ -22,8 +25,6 @@ public class UserAPI {
 
 	@Path("create")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(User user) {
 		if (!userService.checkMandatoryFieldsAreFilled(user))
 			return Response.notModified().entity("Veuillez renseigner tout les champs obligatoires").build();
@@ -38,8 +39,6 @@ public class UserAPI {
 
 	@Path("findById")
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response findUser(@QueryParam("id") Long id) {
 		User user = userService.findBy(id);
 		if (user == null)
@@ -50,8 +49,6 @@ public class UserAPI {
 	
 	@Path("authenticate")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(User toTest) {
 		User user = null;
 		if (toTest.getEmail() == null)
@@ -66,5 +63,25 @@ public class UserAPI {
 			return Response.status(Status.NOT_FOUND).build();		
 				
 			}
+	
+	@GET
+	@Path("findAll")
+	public Response findAll() {
+		return Response.ok(userService.findAll()).build();
+	}
+	
+	@GET
+	@Path("changePassword")
+	public Response changePassword(@QueryParam("email") String email, @QueryParam("oldPassword") String oldPassword, @QueryParam("newPassword") String newPassword) {
+		User user = userService.findBy(email);
+		if (user == null)
+			return Response.notModified().entity("L'email ne correspond à aucun utilisateur").build();
+		if (!userService.verifyPwd(oldPassword, user.getPwd()))
+			return Response.notModified().entity("Mot de passe incorrect").build();
+		user.setPwd(userService.hashPassword(newPassword));
+		userService.merge(user);
+		return Response.ok().build();
+			
+	}
 
 }

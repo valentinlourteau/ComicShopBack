@@ -29,6 +29,7 @@ public class ThemeAPI {
 	}
 	
 	@GET
+	@Path("findAll")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Theme> findAll() {
 		return themeService.findAll();

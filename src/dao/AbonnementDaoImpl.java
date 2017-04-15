@@ -14,14 +14,17 @@ public class AbonnementDaoImpl extends GenericJpaDaoImpl<Abonnement> implements 
 
 	@Override
 	public Abonnement findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return queryFactory().selectFrom(ABONNEMENT).where(ABONNEMENT.id.eq(id)).fetchOne();
 	}
 
 	@Override
 	public List<Abonnement> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return queryFactory().selectFrom(ABONNEMENT).fetch();
+	}
+
+	@Override
+	public Abonnement findBy(Long userId, Long serieId) {
+		return queryFactory().selectFrom(ABONNEMENT).where(ABONNEMENT.user.id.eq(userId).and(ABONNEMENT.serie.id.eq(serieId))).fetchOne();
 	}
 
 }

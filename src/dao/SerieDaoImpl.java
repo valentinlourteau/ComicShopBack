@@ -25,14 +25,18 @@ public class SerieDaoImpl extends GenericJpaDaoImpl<Serie> implements SerieDao {
 	}
 
 	@Override
-	public boolean checkDoublon(String titre) {
-		return queryFactory().selectFrom(SERIE).where(SERIE.titre.eq(titre)).fetchCount() == 1L ? true : false;
+	public long checkDoublon(String titre) {
+		return queryFactory().selectFrom(SERIE).where(SERIE.titre.eq(titre)).fetchCount();
 	}
 
 	@Override
 	public List<User> findAllUserWhichSuscribedToTheSerie(Long serieId) {
-		return queryFactory().selectFrom(ABONNEMENT).where(ABONNEMENT.serie.id.eq(serieId)).distinct().fetch().stream()
-				.map(Abonnement::getUser).collect(Collectors.toList());
+		return queryFactory().select(ABONNEMENT.user.as(USER)).where(ABONNEMENT.serie.id.eq(serieId)).from(ABONNEMENT).distinct().fetch();
+	}
+
+	@Override
+	public List<Serie> findAllSerieWhichAreSuscribedByTheUser(Long userId) {
+		return queryFactory().select(ABONNEMENT.serie.as(SERIE)).where(ABONNEMENT.user.id.eq(userId)).from(ABONNEMENT).distinct().fetch();
 	}
 
 }
