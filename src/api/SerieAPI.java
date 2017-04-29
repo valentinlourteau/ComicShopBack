@@ -1,6 +1,7 @@
 package api;
 
 import javax.inject.Inject;
+import javax.jdo.annotations.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -45,7 +46,7 @@ public class SerieAPI {
 
 	@DELETE
 	@Path("delete")
-	public Response delete(Long id) {
+	public Response delete(@QueryParam("id") Long id) {
 		Serie serie = serieService.findById(id);
 		if (serie == null)
 			return Response.noContent().entity("Aucune série trouvée, pas de suppresion").build();

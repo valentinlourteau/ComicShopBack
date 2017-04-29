@@ -36,7 +36,6 @@ public class ThemeServiceImpl implements ThemeService {
 				themeDao.persist(theme);
 			}
 		});
-		themeDao.flush();
 	}
 
 }

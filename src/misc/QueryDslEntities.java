@@ -4,6 +4,8 @@ import entities.QAbonnement;
 import entities.QGuide;
 import entities.QProduit;
 import entities.QProduitCommentaire;
+import entities.QProduitImage;
+import entities.QReservation;
 import entities.QSerie;
 import entities.QStock;
 import entities.QTheme;
@@ -19,4 +21,6 @@ public interface QueryDslEntities {
 	final QStock STOCK = QStock.stock;
 	final QSerie SERIE = QSerie.serie;
 	final QAbonnement ABONNEMENT = QAbonnement.abonnement;
+	final QReservation RESERVATION = QReservation.reservation;
+	final QProduitImage PRODUIT_IMAGE = QProduitImage.produitImage;
 }

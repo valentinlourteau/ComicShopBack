@@ -40,14 +40,15 @@ public class Produit implements Serializable {
 	@Column(name = "PROD_TITRE_SECONDAIRE")
 	private String titreSecondaire;
 	
-//	@OneToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "PROD_EAN", referencedColumnName = "STOCK_EAN")
-//	private Stock stock;
-	
-	@Column(name = "PROD_EAN")
+	@Column(name = "PROD_EAN" , insertable = false, updatable = false)
 	private String ean;
 	
-	@Transient
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PROD_EAN", referencedColumnName = "PROD_EAN", insertable = false, updatable = false)
+	private ProduitImage image;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PROD_EAN", referencedColumnName = "STOCK_EAN", insertable = false, updatable = false)
 	private Stock stock;
 	
 	public BigDecimal getPrixHt() {
@@ -98,14 +99,6 @@ public class Produit implements Serializable {
 		this.ean = ean;
 	}
 
-//	public Stock getStock() {
-//		return stock;
-//	}
-//
-//	public void setStock(Stock stock) {
-//		this.stock = stock;
-//	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -120,6 +113,14 @@ public class Produit implements Serializable {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
+	}
+
+	public ProduitImage getImage() {
+		return image;
+	}
+
+	public void setImage(ProduitImage image) {
+		this.image = image;
 	}
 	
 }

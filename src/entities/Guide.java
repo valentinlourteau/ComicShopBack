@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -24,7 +25,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "guide")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope = Guide.class)
 public class Guide implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,14 +38,10 @@ public class Guide implements Serializable {
 	@Column(name = "TITRE")
 	private String titre;
 
-	@Column(name = "RESUME")
+	@Column(name = "RESUME", length = 4000)
 	private String resume;
 	
-	/**
-	 * TODO faire mieux que ça, trouver une solution autre 
-	 * pour résoudre les problème de lazy et de stack overflow
-	 */
-	@OneToMany(mappedBy = "guide", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "guide", fetch = FetchType.LAZY)
 	private Set<ProduitCommentaire> produitsCommentaires;
 	
 	@Column(name = "B_VISIBLE", columnDefinition = "TINYINT")
@@ -60,7 +57,7 @@ public class Guide implements Serializable {
 	@Lob
 	private byte[] imageCouverture;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		      name="guide_theme",
 		      joinColumns=@JoinColumn(name="GUIDE_ID", referencedColumnName="GUIDE_ID"),

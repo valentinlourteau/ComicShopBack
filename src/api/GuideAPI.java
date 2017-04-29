@@ -17,13 +17,18 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.spi.HttpResponse;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+
 import entities.Guide;
 import entities.Theme;
 import services.GuideService;
+import services.ProduitService;
 import services.ThemeService;
 
 @Path("Guide")
-public class GuideAPI {
+public class GuideAPI extends ParentAPI {
 
 	@Context
 	HttpResponse response;
@@ -33,6 +38,9 @@ public class GuideAPI {
 
 	@Inject
 	ThemeService themeService;
+	
+	@Inject
+	ProduitService produitService;
 
 	/**
 	 * Créer un guide
@@ -98,13 +106,14 @@ public class GuideAPI {
 	 * Permet de récupérer tous les guides en fetchant les lazy join
 	 * 
 	 * @return
+	 * @throws JsonProcessingException 
 	 */
 	@Path("findAll")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAll() {
 		List<Guide> guides = guideService.findAll();
-		return Response.ok(guides).build();
+		return Response.ok(write(guides)).build();
 	}
 
 	/**
@@ -134,8 +143,7 @@ public class GuideAPI {
 		Guide guide = guideService.findBy(id);
 		if (guide == null)
 			return Response.noContent().build();
-		guide.setProduitsCommentaires(guideService.findProduitsCommentairesByGuideId(guide.getId()));
-		return Response.ok(guide).build();
+		return Response.ok(write(guide)).build();
 	}
 
 	/**

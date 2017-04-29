@@ -50,6 +50,6 @@ public abstract class GenericJpaDaoImpl<E> implements GenericJpaDao<E>, QueryDsl
 	public E merge(E entity) {
 		em.merge(entity);
 		return entity;
-	}
+	}	
 
 }

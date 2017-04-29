@@ -10,21 +10,21 @@ import javax.ws.rs.core.Application;
 @Singleton
 @ApplicationPath("/")
 public class JaxRSActivator extends Application {
-	
-	
+
 	public JaxRSActivator() {
 	}
-	
+
 	@Override
 	public Set<Class<?>> getClasses() {
-	    Set<Class<?>> classes = new HashSet<Class<?>>();
-	    classes.add(UserAPI.class);
-	    classes.add(GuideAPI.class);
-	    classes.add(ThemeAPI.class);
-	    classes.add(ProduitAPI.class);
-	    classes.add(ProduitsCommentairesAPI.class);
-	    classes.add(SerieAPI.class);
-	    return classes;
+		Set<Class<?>> classes = new HashSet<Class<?>>();
+		classes.add(UserAPI.class);
+		classes.add(GuideAPI.class);
+		classes.add(ThemeAPI.class);
+		classes.add(ProduitAPI.class);
+		classes.add(ProduitsCommentairesAPI.class);
+		classes.add(SerieAPI.class);
+		classes.add(ReservationAPI.class);
+		return classes;
 	}
 
 }

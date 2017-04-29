@@ -19,22 +19,24 @@ public class GuideDaoImpl extends GenericJpaDaoImpl<Guide> implements GuideDao {
 
 	@Override
 	public List<Guide> findAllByTheme(Theme theme) {
-		return queryFactory().selectFrom(GUIDE).where(GUIDE.themes.contains(theme))
-				.leftJoin(GUIDE.themes, THEME).fetchJoin().fetch();
+		return queryFactory().selectFrom(GUIDE).where(GUIDE.themes.contains(theme)).leftJoin(GUIDE.themes, THEME)
+				.fetchJoin().fetch();
 	}
 
 	@Override
 	public Guide findById(long id) {
 		return queryFactory().selectFrom(GUIDE).where(GUIDE.id.eq(id))
+				.leftJoin(GUIDE.produitsCommentaires, PRODUIT_COMMENTAIRE).fetchJoin()
+				.leftJoin(PRODUIT_COMMENTAIRE.produit, PRODUIT).fetchJoin().leftJoin(PRODUIT.stock, STOCK).fetchJoin()
+				.leftJoin(PRODUIT.image, PRODUIT_IMAGE).fetchJoin()
 				.fetchOne();
 	}
 
 	@Override
 	public List<Guide> findAllsWithPictureAndTitle() {
-		return queryFactory()
-				.select(Projections.bean(GUIDE, GUIDE.id, GUIDE.titre, GUIDE.imageCouverture, GUIDE.resume, GUIDE.bVisible))
+		return queryFactory().select(
+				Projections.bean(GUIDE, GUIDE.id, GUIDE.titre, GUIDE.imageCouverture, GUIDE.resume, GUIDE.bVisible))
 				.from(GUIDE).fetch();
-
 	}
 
 }

@@ -80,8 +80,7 @@ public class UserAPI {
 			return Response.notModified().entity("Mot de passe incorrect").build();
 		user.setPwd(userService.hashPassword(newPassword));
 		userService.merge(user);
-		return Response.ok().build();
-			
+		return Response.ok().build();			
 	}
 
 }

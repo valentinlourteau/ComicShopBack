@@ -33,7 +33,6 @@ public class ProduitDaoImpl extends GenericJpaDaoImpl<Produit> implements Produi
 
 	@Override
 	public Produit findById(long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
