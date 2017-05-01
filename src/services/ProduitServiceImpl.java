@@ -20,8 +20,8 @@ public class ProduitServiceImpl implements ProduitService {
 	StockDao stockDao;
 
 	@Override
-	public List<Produit> findMinimalProductsByLibelle(String libelle) {
-		return produitDao.findMinimalProductsByLibelle(libelle);
+	public List<Produit> findAllBy(String libelle) {
+		return produitDao.findAllBy(libelle);
 	}
 
 	@Override

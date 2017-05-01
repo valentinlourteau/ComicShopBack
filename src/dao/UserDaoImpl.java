@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -23,7 +24,6 @@ public class UserDaoImpl extends GenericJpaDaoImpl<User> implements UserDao {
 
 	@Override
 	public List<User> findAll() {
-		// return null;
 		return queryFactory().select(Projections.bean(USER, USER.id, USER.prenom, USER.nom, USER.email)).from(USER)
 				.fetch();
 	}
@@ -31,6 +31,15 @@ public class UserDaoImpl extends GenericJpaDaoImpl<User> implements UserDao {
 	@Override
 	public User findBy(String email) {
 		return queryFactory().selectFrom(USER).where(USER.email.eq(email)).fetchOne();
+	}
+
+	@Override
+	public List<User> findAllUsersToRank() {
+		return queryFactory().selectFrom(USER)
+				.leftJoin(USER.reservations, RESERVATION).fetchJoin()
+				.where(RESERVATION.dateRetraitMax.after(new Date())
+						.and(RESERVATION.bFinalise.eq(Boolean.FALSE)))
+				.fetch();
 	}
 
 }

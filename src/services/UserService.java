@@ -27,4 +27,6 @@ public interface UserService {
 
 	public void merge(User user);
 
+	public List<User> findAllUsersToRank();
+
 }

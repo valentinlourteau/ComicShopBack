@@ -9,30 +9,32 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import entities.Theme;
 import services.ThemeService;
 
 @Path("Theme")
-public class ThemeAPI {
-	
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public class ThemeAPI extends ParentAPI {
+
 	@Inject
 	ThemeService themeService;
-	
+
 	@Path("findByLibelle")
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Theme> findByQuery(
-			@QueryParam("libelle") String libelle) {
-		return themeService.findByQuery(libelle);
+	public Response findByQuery(@QueryParam("libelle") String libelle) {
+		if (libelle == null)
+			return Response.noContent().build();
+		return Response.ok(write(themeService.findByQuery(libelle))).build();
 	}
-	
+
 	@GET
 	@Path("findAll")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Theme> findAll() {
-		return themeService.findAll();
+	public Response findAll() {
+		return Response.ok(write(themeService.findAll())).build();
 	}
 
 }

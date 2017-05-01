@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.Type;
 
 @Entity
@@ -44,10 +45,12 @@ public class Produit implements Serializable {
 	private String ean;
 	
 	@OneToOne(fetch = FetchType.LAZY)
+	@ForeignKey(name = "none")
 	@JoinColumn(name = "PROD_EAN", referencedColumnName = "PROD_EAN", insertable = false, updatable = false)
 	private ProduitImage image;
 	
 	@OneToOne(fetch = FetchType.LAZY)
+	@ForeignKey(name = "none")
 	@JoinColumn(name = "PROD_EAN", referencedColumnName = "STOCK_EAN", insertable = false, updatable = false)
 	private Stock stock;
 	

@@ -16,10 +16,14 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ForeignKey;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import misc.enums.StatutReservationEnum;
 
 @Entity
 @Table(name = "reservation")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope = Reservation.class)
 public class Reservation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -47,6 +51,7 @@ public class Reservation implements Serializable {
 	@Column(name = "DATE_RETRAIT_MAX")
 	private Date dateRetraitMax;
 	
+	@Column(name = "STATUT_RESERVATION")
 	@Enumerated(EnumType.STRING)
     private StatutReservationEnum statutReservation;
 	

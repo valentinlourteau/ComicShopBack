@@ -17,8 +17,18 @@ public class UserServiceImpl implements UserService {
 	@Inject
 	UserDao userDao;
 
+	@Override
+	public List<User> findAll() {
+		return userDao.findAll();
+	}
+
 	public User findBy(Long id) {
 		return userDao.findById(id);
+	}
+
+	@Override
+	public User findBy(String email) {
+		return userDao.findBy(email);
 	}
 
 	@Override
@@ -32,13 +42,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean verifyPwd(String oldPassword, String pwd) {
+		return Crypter.withMD5(oldPassword).equals(pwd) ? true : false;
+	}
+
+	@Override
 	public void persist(User user) {
 		userDao.persist(user);
 	}
 
 	@Override
-	public User findBy(String email) {
-		return userDao.findBy(email);
+	public void merge(User user) {
+		userDao.merge(user);
 	}
 
 	@Override
@@ -49,18 +64,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findAll() {
-		return userDao.findAll();
-	}
-
-	@Override
-	public boolean verifyPwd(String oldPassword, String pwd) {
-		return Crypter.withMD5(oldPassword).equals(pwd) ? true : false;
-	}
-
-	@Override
-	public void merge(User user) {
-		userDao.merge(user);
+	public List<User> findAllUsersToRank() {
+		return userDao.findAllUsersToRank();
 	}
 	
 }

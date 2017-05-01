@@ -14,7 +14,7 @@ import entities.Produit;
 import services.ProduitService;
 
 @Path("Produit")
-public class ProduitAPI {
+public class ProduitAPI extends ParentAPI {
 
 	@Inject
 	ProduitService produitService;
@@ -23,11 +23,11 @@ public class ProduitAPI {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findMinimalProductsByLibelle(@QueryParam("libelle") String libelle) {
-		List<Produit> produits = produitService.findMinimalProductsByLibelle(libelle);
+		List<Produit> produits = produitService.findAllBy(libelle);
 		if (produits == null || produits.isEmpty())
 			return Response.noContent().build();
 		else
-			return Response.ok(produits).build();
+			return Response.ok(write(produits)).build();
 	}
 
 	@Path("findById")
@@ -35,7 +35,7 @@ public class ProduitAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findProductById(@QueryParam("id") Integer id) {
 		Produit produit = produitService.findProductById(id);
-		return Response.ok(produit).build();
+		return Response.ok(write(produit)).build();
 	}
 
 }

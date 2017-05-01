@@ -1,9 +1,12 @@
 package api;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -13,12 +16,11 @@ import javax.ws.rs.core.Response.Status;
 
 import entities.User;
 import services.UserService;
-import utils.Crypter;
 
 @Path("User")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class UserAPI {
+public class UserAPI extends ParentAPI {
 
 	@Inject
 	UserService userService;
@@ -32,7 +34,7 @@ public class UserAPI {
 		if (newUser == null) {
 			user.setPwd(userService.hashPassword(user.getPwd()));
 			userService.persist(user);
-			return Response.ok(user).build();
+			return Response.ok(write(user)).build();
 		} else
 			return Response.status(Response.Status.CONFLICT).entity(newUser).build();
 	}
@@ -44,7 +46,7 @@ public class UserAPI {
 		if (user == null)
 			return Response.noContent().build();
 		else
-			return Response.ok(user).build();
+			return Response.ok(write(user)).build();
 	}
 	
 	@Path("authenticate")
@@ -58,7 +60,7 @@ public class UserAPI {
 		else
 			user = userService.findBy(toTest.getEmail(), toTest.getPwd());
 		if (user != null)
-			return Response.status(Status.OK).entity(user).build();
+			return Response.status(Status.OK).entity(write(user)).build();
 		else
 			return Response.status(Status.NOT_FOUND).build();		
 				
@@ -67,7 +69,7 @@ public class UserAPI {
 	@GET
 	@Path("findAll")
 	public Response findAll() {
-		return Response.ok(userService.findAll()).build();
+		return Response.ok(write(userService.findAll())).build();
 	}
 	
 	@GET
@@ -81,6 +83,30 @@ public class UserAPI {
 		user.setPwd(userService.hashPassword(newPassword));
 		userService.merge(user);
 		return Response.ok().build();			
+	}
+	
+	@PUT
+	@Path("update")
+	public Response updateUser(User user) {
+		if (user == null)
+			return Response.noContent().build();
+		User fetched = userService.findBy(user.getId());
+		fetched.setAge(user.getAge());
+		fetched.setEmail(user.getEmail());
+		fetched.setNom(user.getNom());
+		fetched.setPrenom(user.getPrenom());
+		fetched.setStatutUtilisateur(user.getStatutUtilisateur());
+		userService.merge(fetched);
+		return Response.ok().build();
+	}
+	
+	@Path("findAllUsersToRank")
+	@GET
+	public Response findAllUsersToRank() {
+		List<User> users = userService.findAllUsersToRank();
+		if (users.isEmpty())
+			return Response.noContent().build();
+		return Response.ok(write(users)).build();
 	}
 
 }

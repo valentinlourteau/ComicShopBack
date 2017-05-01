@@ -38,7 +38,7 @@ public class GuideAPI extends ParentAPI {
 
 	@Inject
 	ThemeService themeService;
-	
+
 	@Inject
 	ProduitService produitService;
 
@@ -59,7 +59,7 @@ public class GuideAPI extends ParentAPI {
 			themeService.create(guide.getThemes());
 		guideService.persist(guide);
 		guide.setImageCouverture(null);
-		return Response.ok(guide).build();
+		return Response.ok(write(guide)).build();
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class GuideAPI extends ParentAPI {
 			return Response.notModified().build();
 		else
 			guideService.merge(guide);
-		return Response.ok(guide).build();
+		return Response.ok(write(guide)).build();
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class GuideAPI extends ParentAPI {
 		Guide guide = guideService.findBy(id);
 		if (guide != null) {
 			guideService.delete(guide);
-			return Response.accepted(guide).build();
+			return Response.accepted(write(guide)).build();
 		} else
 			return Response.noContent().build();
 	}
@@ -106,7 +106,7 @@ public class GuideAPI extends ParentAPI {
 	 * Permet de récupérer tous les guides en fetchant les lazy join
 	 * 
 	 * @return
-	 * @throws JsonProcessingException 
+	 * @throws JsonProcessingException
 	 */
 	@Path("findAll")
 	@GET
@@ -126,7 +126,7 @@ public class GuideAPI extends ParentAPI {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAllsWithPictureAndTitle() {
-		return Response.ok(guideService.findAllsWithPictureAndTitle()).build();
+		return Response.ok(write(guideService.findAllsWithPictureAndTitle())).build();
 	}
 
 	/**
@@ -157,11 +157,9 @@ public class GuideAPI extends ParentAPI {
 	public Response findByTheme(@QueryParam("id") Long id) {
 		if (id == null)
 			return Response.noContent().build();
-		Theme theme = themeService.findById(id);
-		if (theme != null) {
-			List<Guide> guides = guideService.findAllByTheme(theme);
-			return Response.ok(guides).build();
-		}
+		List<Guide> guides = guideService.findAllByTheme(id);
+		if (!guides.isEmpty())
+			return Response.ok(write(guides)).build();
 		return Response.noContent().build();
 	}
 

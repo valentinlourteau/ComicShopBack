@@ -12,7 +12,7 @@ public interface GuideDao extends GenericJpaDao<Guide> {
 	
 	public List<Guide> findAll();
 
-	public List<Guide> findAllByTheme(Theme theme);
+	public List<Guide> findAllByTheme(Long themeId);
 
 	public List<Guide> findAllsWithPictureAndTitle();
 	

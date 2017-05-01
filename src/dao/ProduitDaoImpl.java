@@ -12,23 +12,21 @@ import entities.Produit;
 public class ProduitDaoImpl extends GenericJpaDaoImpl<Produit> implements ProduitDao {
 
 	@Override
-	public List<Produit> findMinimalProductsByLibelle(String libelle) {
-//		return queryFactory().select(Projections.bean(Produit.class, PRODUIT.id, PRODUIT.titre).as(PRODUIT))
-		return queryFactory().selectFrom(PRODUIT)
-//				.from(PRODUIT)
-				.where(PRODUIT.titre.containsIgnoreCase(libelle)).fetch();
+	public List<Produit> findAllBy(String libelle) {
+		return queryFactory()
+				.select(Projections.bean(PRODUIT, PRODUIT.id, PRODUIT.ean, PRODUIT.stock, PRODUIT.titre,
+						PRODUIT.titreSecondaire))
+				.from(PRODUIT).where(PRODUIT.titre.containsIgnoreCase(libelle)).fetch();
 	}
 
 	@Override
 	public Produit findBy(Integer id) {
-		return queryFactory().selectFrom(PRODUIT).where(PRODUIT.id.eq(id))
-				.fetchOne();
+		return queryFactory().selectFrom(PRODUIT).where(PRODUIT.id.eq(id)).fetchOne();
 	}
 
 	@Override
 	public List<Produit> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return queryFactory().selectFrom(PRODUIT).fetch();
 	}
 
 	@Override

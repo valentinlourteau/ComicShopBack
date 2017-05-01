@@ -22,7 +22,7 @@ import services.UserService;
 @Path(value = "Serie")
 @Produces(value = MediaType.APPLICATION_JSON)
 @Consumes(value = MediaType.APPLICATION_JSON)
-public class SerieAPI {
+public class SerieAPI extends ParentAPI {
 
 	@Inject
 	SerieService serieService;
@@ -40,7 +40,7 @@ public class SerieAPI {
 			serieService.persist(serie);
 			return Response.ok().build();
 		} else
-			return Response.notModified().entity(serie).build();
+			return Response.notModified().entity(write(serie)).build();
 
 	}
 
@@ -49,16 +49,16 @@ public class SerieAPI {
 	public Response delete(@QueryParam("id") Long id) {
 		Serie serie = serieService.findById(id);
 		if (serie == null)
-			return Response.noContent().entity("Aucune série trouvée, pas de suppresion").build();
+			return Response.noContent().build();
 		serieDao.remove(serie);
-		return Response.ok(serie).build();
+		return Response.ok().build();
 	}
 
 	@PUT
 	@Path("update")
 	public Response update(Serie serie) {
 		serieDao.merge(serie);
-		return Response.accepted(serie).build();
+		return Response.accepted(write(serie)).build();
 	}
 
 	@GET
@@ -66,7 +66,7 @@ public class SerieAPI {
 	public Response suscribe(@QueryParam("userId")Long userId,@QueryParam("serieId")Long serieId) {
 		Abonnement abonnement = serieService.suscribeToASerie(userId, serieId);
 		if (abonnement == null)
-			return Response.notModified().entity("Erreur lors de la cr�ation de l'abonnement, doublon possible").build();
+			return Response.notModified().build();
 		return Response.ok().build();
 	}
 
@@ -82,19 +82,19 @@ public class SerieAPI {
 	@GET
 	@Path("findAll")
 	public Response findAll() {
-		return Response.ok(serieDao.findAll()).build();
+		return Response.ok(write(serieDao.findAll())).build();
 	}
 	
 	@GET
 	@Path("findAllUserBySerieId")
 	public Response findAllUserBySerieId(@QueryParam("serieId") Long serieId) {
-		return Response.ok(serieDao.findAllUserWhichSuscribedToTheSerie(serieId)).build();
+		return Response.ok(write(serieDao.findAllUserWhichSuscribedToTheSerie(serieId))).build();
 	}
 	
 	@GET
 	@Path("findAllSerieByUserId")
 	public Response findAllSerieByUserId(@QueryParam("userId") Long userId) {
-		return Response.ok(serieDao.findAllSerieWhichAreSuscribedByTheUser(userId)).build();
+		return Response.ok(write(serieDao.findAllSerieWhichAreSuscribedByTheUser(userId))).build();
 	}
 
 }

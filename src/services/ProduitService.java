@@ -10,7 +10,7 @@ import entities.Stock;
 @Local
 public interface ProduitService {
 
-	List<Produit> findMinimalProductsByLibelle(String libelle);
+	List<Produit> findAllBy(String libelle);
 
 	Produit findProductById(Integer id);
 

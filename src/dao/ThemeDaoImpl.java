@@ -24,8 +24,7 @@ public class ThemeDaoImpl extends GenericJpaDaoImpl<Theme> implements ThemeDao {
 
 	@Override
 	public Theme findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return queryFactory().selectFrom(THEME).where(THEME.id.eq(id)).fetchOne();
 	}
 
 }

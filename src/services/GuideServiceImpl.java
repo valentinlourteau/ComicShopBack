@@ -1,7 +1,5 @@
 package services;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,7 +9,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -36,7 +33,8 @@ public class GuideServiceImpl implements GuideService {
 		Guide guide = guideDao.findById(id);
 		guide.getProduitsCommentaires().forEach(prodcom -> {
 			if (prodcom.getProduit().getImage() != null) {
-				Path path = Paths.get("/var/www/html/static/img/products/" + prodcom.getProduit().getImage().getProdImageFront());
+//				Path path = Paths.get("/var/www/html/static/img/products/" + prodcom.getProduit().getImage().getProdImageFront());
+				Path path = Paths.get("/html/static/img/products/" + prodcom.getProduit().getImage().getProdImageFront());
 				try {
 					prodcom.getProduit().getImage().setImage(Files.readAllBytes(path));
 				} catch (Exception e) {
@@ -66,8 +64,8 @@ public class GuideServiceImpl implements GuideService {
 	}
 
 	@Override
-	public List<Guide> findAllByTheme(Theme theme) {
-		return guideDao.findAllByTheme(theme);
+	public List<Guide> findAllByTheme(Long themeId) {
+		return guideDao.findAllByTheme(themeId);
 	}
 
 	@Override

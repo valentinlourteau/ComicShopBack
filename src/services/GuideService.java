@@ -20,7 +20,7 @@ public interface GuideService {
 
 	public void delete(Guide guide);
 
-	public List<Guide> findAllByTheme(Theme theme);
+	public List<Guide> findAllByTheme(Long themeId);
 
 	public void merge(Guide guide);
 
