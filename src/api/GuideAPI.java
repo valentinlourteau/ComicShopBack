@@ -76,8 +76,11 @@ public class GuideAPI extends ParentAPI {
 	public Response mergeGuide(Guide guide) {
 		if (guide.getId() == null)
 			return Response.notModified().build();
-		else
-			guideService.merge(guide);
+		else {
+			Guide fetched = guideService.findBy(guide.getId());
+			fetched.setbVisible(guide.getbVisible());
+			guideService.merge(fetched);
+		}
 		return Response.ok(write(guide)).build();
 	}
 

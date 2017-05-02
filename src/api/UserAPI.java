@@ -91,10 +91,10 @@ public class UserAPI extends ParentAPI {
 		if (user == null)
 			return Response.noContent().build();
 		User fetched = userService.findBy(user.getId());
-		fetched.setAge(user.getAge());
-		fetched.setEmail(user.getEmail());
-		fetched.setNom(user.getNom());
-		fetched.setPrenom(user.getPrenom());
+//		fetched.setAge(user.getAge());
+//		fetched.setEmail(user.getEmail());
+//		fetched.setNom(user.getNom());
+//		fetched.setPrenom(user.getPrenom());
 		fetched.setStatutUtilisateur(user.getStatutUtilisateur());
 		userService.merge(fetched);
 		return Response.ok().build();

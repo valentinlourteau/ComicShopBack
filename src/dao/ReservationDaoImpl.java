@@ -26,6 +26,7 @@ public class ReservationDaoImpl extends GenericJpaDaoImpl<Reservation> implement
 		return queryFactory().selectFrom(RESERVATION)
 				.where(RESERVATION.user.id.eq(userId))
 				.leftJoin(RESERVATION.user, USER)
+				.leftJoin(RESERVATION.produit, PRODUIT).fetchJoin()
 				.distinct()
 				.fetch();
 	}
