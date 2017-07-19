@@ -13,4 +13,6 @@ public interface ProduitDao extends GenericJpaDao<Produit> {
 	
 	public Produit findBy(Integer id);
 
+	List<Produit> findAllReducedBy(String libelle);
+
 }

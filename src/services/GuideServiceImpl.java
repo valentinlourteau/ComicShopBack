@@ -18,6 +18,7 @@ import dao.ProduitCommentaireDao;
 import entities.Guide;
 import entities.ProduitCommentaire;
 import entities.Theme;
+import misc.enums.FormatImageEnum;
 
 @Stateless
 public class GuideServiceImpl implements GuideService {
@@ -28,20 +29,16 @@ public class GuideServiceImpl implements GuideService {
 	@Inject
 	ProduitCommentaireDao produitCommentaireDao;
 
+	@Inject
+	ImageService imageService;
+
 	@Override
 	public Guide findBy(Long id) {
 		Guide guide = guideDao.findById(id);
 		guide.getProduitsCommentaires().forEach(prodcom -> {
-			if (prodcom.getProduit().getImage() != null) {
-//				Path path = Paths.get("/var/www/html/static/img/products/" + prodcom.getProduit().getImage().getProdImageFront());
-				Path path = Paths.get("/html/static/img/products/" + prodcom.getProduit().getImage().getProdImageFront());
-				try {
-					prodcom.getProduit().getImage().setImage(Files.readAllBytes(path));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			if (prodcom.getProduit().getProduitImage() != null)
+				prodcom.getProduit().getProduitImage()
+						.setImage(imageService.getImage(prodcom.getProduit().getEan(), FormatImageEnum.MEDIUM));
 		});
 		return guide;
 	}
