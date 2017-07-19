@@ -30,7 +30,7 @@ public class GuideDaoImpl extends GenericJpaDaoImpl<Guide> implements GuideDao {
 		return queryFactory().selectFrom(GUIDE).where(GUIDE.id.eq(id))
 				.leftJoin(GUIDE.produitsCommentaires, PRODUIT_COMMENTAIRE).fetchJoin()
 				.leftJoin(PRODUIT_COMMENTAIRE.produit, PRODUIT).fetchJoin().leftJoin(PRODUIT.stock, STOCK).fetchJoin()
-				.leftJoin(PRODUIT.image, PRODUIT_IMAGE).fetchJoin().fetchOne();
+				.leftJoin(PRODUIT.produitImage, PRODUIT_IMAGE).fetchJoin().fetchOne();
 	}
 
 	@Override

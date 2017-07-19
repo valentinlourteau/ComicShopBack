@@ -18,10 +18,13 @@ public class ProduitServiceImpl implements ProduitService {
 	
 	@Inject
 	StockDao stockDao;
+	
+	@Inject
+	ImageService imageService;
 
 	@Override
 	public List<Produit> findAllBy(String libelle) {
-		return produitDao.findAllBy(libelle);
+		return produitDao.findAllReducedBy(libelle);
 	}
 
 	@Override
@@ -34,6 +37,13 @@ public class ProduitServiceImpl implements ProduitService {
 	@Override
 	public Stock findStockByEan(String ean) {
 		return stockDao.findByEan(ean);
+	}
+
+	@Override
+	public List<Produit> findAllWithImagesBy(String libelle) {
+		List<Produit> produits = produitDao.findAllBy(libelle);
+		produits.forEach(produit -> imageService.attachImageToProduit(produit));
+		return produits;
 	}
 
 }

@@ -21,6 +21,7 @@ import dao.UserDao;
 import entities.Reservation;
 import entities.User;
 import misc.enums.StatutReservationEnum;
+import services.ReservationService;
 import services.UserService;
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -39,6 +40,9 @@ public class ReservationAPI extends ParentAPI {
 
 	@Inject
 	UserService userService;
+	
+	@Inject
+	ReservationService reservationService;
 
 	@Path("create")
 	@GET
@@ -66,7 +70,7 @@ public class ReservationAPI extends ParentAPI {
 
 	@Path("updateStatut")
 	@PUT
-	public Response updateStatut(@QueryParam("reservationId") Long reservationId, StatutReservationEnum statut) {
+	public Response updateStatut(@QueryParam("reservationId") Long reservationId, @QueryParam("statut") StatutReservationEnum statut) {
 		Reservation reservation = reservationDao.findById(reservationId);
 		if (reservation == null)
 			return Response.noContent().build();
@@ -88,7 +92,16 @@ public class ReservationAPI extends ParentAPI {
 	@Path("findAllByUser")
 	@GET
 	public Response findAllByUser(@QueryParam("userId") Long userId) {
-		List<Reservation> reservations = reservationDao.findAllBy(userId);
+		List<Reservation> reservations = reservationService.findAllBy(userId);
+		if (reservations.isEmpty())
+			return Response.noContent().build();
+		return Response.ok(write(reservations)).build();
+	}
+	
+	@Path("findAllByStatut")
+	@GET
+	public Response findAllByStatut(@QueryParam("statut") StatutReservationEnum statut) {
+		List<Reservation> reservations = reservationService.findAllBy(statut);
 		if (reservations.isEmpty())
 			return Response.noContent().build();
 		return Response.ok(write(reservations)).build();

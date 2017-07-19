@@ -13,10 +13,12 @@ public class ProduitDaoImpl extends GenericJpaDaoImpl<Produit> implements Produi
 
 	@Override
 	public List<Produit> findAllBy(String libelle) {
-		return queryFactory()
-				.select(Projections.bean(PRODUIT, PRODUIT.id, PRODUIT.ean, PRODUIT.stock, PRODUIT.titre,
-						PRODUIT.titreSecondaire))
-				.from(PRODUIT).where(PRODUIT.titre.containsIgnoreCase(libelle)).fetch();
+		return queryFactory().selectFrom(PRODUIT)
+				.leftJoin(PRODUIT.produitImage, PRODUIT_IMAGE).fetchJoin()
+				.leftJoin(PRODUIT.stock, STOCK).fetchJoin()
+				.where(PRODUIT.titre.containsIgnoreCase(libelle))
+				.distinct()
+				.fetch();
 	}
 
 	@Override
@@ -32,6 +34,14 @@ public class ProduitDaoImpl extends GenericJpaDaoImpl<Produit> implements Produi
 	@Override
 	public Produit findById(long id) {
 		return null;
+	}
+
+	@Override
+	public List<Produit> findAllReducedBy(String libelle) {
+		return queryFactory()
+				.select(Projections.bean(PRODUIT, PRODUIT.id, PRODUIT.ean, PRODUIT.stock, PRODUIT.titre,
+						PRODUIT.titreSecondaire))
+				.from(PRODUIT).where(PRODUIT.titre.containsIgnoreCase(libelle)).fetch();
 	}
 
 }

@@ -47,7 +47,7 @@ public class Produit implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@ForeignKey(name = "none")
 	@JoinColumn(name = "PROD_EAN", referencedColumnName = "PROD_EAN", insertable = false, updatable = false)
-	private ProduitImage image;
+	private ProduitImage produitImage;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@ForeignKey(name = "none")
@@ -118,12 +118,12 @@ public class Produit implements Serializable {
 		this.stock = stock;
 	}
 
-	public ProduitImage getImage() {
-		return image;
+	public ProduitImage getProduitImage() {
+		return produitImage;
 	}
 
-	public void setImage(ProduitImage image) {
-		this.image = image;
+	public void setProduitImage(ProduitImage image) {
+		this.produitImage = image;
 	}
 	
 }

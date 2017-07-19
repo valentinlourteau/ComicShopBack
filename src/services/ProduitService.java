@@ -12,6 +12,8 @@ public interface ProduitService {
 
 	List<Produit> findAllBy(String libelle);
 
+	List<Produit> findAllWithImagesBy(String libelle);
+
 	Produit findProductById(Integer id);
 
 	Stock findStockByEan(String ean);

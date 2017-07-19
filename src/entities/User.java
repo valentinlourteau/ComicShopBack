@@ -1,7 +1,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,23 +9,22 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryType;
 
-import misc.enums.StatutReservationEnum;
 import misc.enums.StatutUtilisateurEnum;
 
 @Entity
 @Table(name = "user")
 @PrimaryKeyJoinColumn(name = "USER_ID")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope = User.class)
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope = User.class)
 public class User extends Personne implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -39,16 +38,20 @@ public class User extends Personne implements Serializable {
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@OneToMany(mappedBy = "user")
-	private List<Abonnement> abonnements;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private Set<Abonnement> abonnements;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-	private List<Reservation> reservations;
+	private Set<Reservation> reservations;
 	
 	@Column(name = "STATUT_UTILISATEUR")
 	@Enumerated(EnumType.STRING)
     private StatutUtilisateurEnum statutUtilisateur;	
+	
+	@QueryType(PropertyType.NUMERIC)
+	@Transient
+	private Long nbAbonnements;
 
 	public String getUsername() {
 		return username;
@@ -74,11 +77,11 @@ public class User extends Personne implements Serializable {
 		this.email = email;
 	}
 
-	public List<Abonnement> getAbonnements() {
+	public Set<Abonnement> getAbonnements() {
 		return abonnements;
 	}
 
-	public void setAbonnements(List<Abonnement> abonnements) {
+	public void setAbonnements(Set<Abonnement> abonnements) {
 		this.abonnements = abonnements;
 	}
 
@@ -90,12 +93,20 @@ public class User extends Personne implements Serializable {
 		this.statutUtilisateur = statutUtilisateur;
 	}
 
-	public List<Reservation> getReservations() {
+	public Set<Reservation> getReservations() {
 		return reservations;
 	}
 
-	public void setReservations(List<Reservation> reservations) {
+	public void setReservations(Set<Reservation> reservations) {
 		this.reservations = reservations;
+	}
+
+	public Long getNbAbonnements() {
+		return nbAbonnements;
+	}
+
+	public void setNbAbonnements(Long nbAbonnements) {
+		this.nbAbonnements = nbAbonnements;
 	}
 
 }

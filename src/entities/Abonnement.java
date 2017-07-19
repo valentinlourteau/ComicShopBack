@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +14,13 @@ import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "abonnement")
-public class Abonnement extends AuditedEntity implements Serializable {
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope = Abonnement.class)
+public class Abonnement implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +42,17 @@ public class Abonnement extends AuditedEntity implements Serializable {
 	@Column(name = "B_ENABLED", columnDefinition = "TINYINT")
 	@Audited
 	private Boolean bEnabled;
+	
+	@Column(name = "DATE_MAJ")
+	private Date dateMaj;
+
+	public Date getDateMaj() {
+		return dateMaj;
+	}
+
+	public void setDateMaj(Date dateMaj) {
+		this.dateMaj = dateMaj;
+	}
 
 	public Boolean getbEnabled() {
 		return bEnabled;

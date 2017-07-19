@@ -24,7 +24,12 @@ public class UserDaoImpl extends GenericJpaDaoImpl<User> implements UserDao {
 
 	@Override
 	public List<User> findAll() {
-		return queryFactory().select(Projections.bean(USER, USER.id, USER.prenom, USER.nom, USER.email)).from(USER)
+		return queryFactory().select(Projections.bean(USER, 
+				USER.id, 
+				USER.prenom, 
+				USER.nom, 
+				USER.email, 
+				USER.statutUtilisateur)).from(USER)
 				.fetch();
 	}
 
