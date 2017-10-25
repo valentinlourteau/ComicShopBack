@@ -80,6 +80,18 @@ public class SerieAPI extends ParentAPI {
 	}
 	
 	@GET
+	@Path("findAbonnementHistoricByUserId")
+	public Response findAbonnementHistoricByUserId(@QueryParam("userId") Long userId) {
+		return Response.ok().build();
+	}
+	
+	@GET
+	@Path("findAbonnementHistoricBySerieId")
+	public Response findAbonnementHistoricBySerieId(@QueryParam("serieId") Long serieId) {
+		return Response.ok().build();
+	}
+	
+	@GET
 	@Path("findAll")
 	public Response findAll() {
 		return Response.ok(write(serieDao.findAll())).build();

@@ -11,8 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 @Entity
 @Table(name = "serie")
+@Audited
 public class Serie implements Serializable {
 	
 	@Id
@@ -27,6 +31,7 @@ public class Serie implements Serializable {
 	private String titre;
 	
 	@OneToMany(mappedBy = "user")
+	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	private List<Abonnement> abonnements;
 
 	public Long getId() {

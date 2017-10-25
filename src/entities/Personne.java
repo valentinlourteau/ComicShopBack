@@ -10,9 +10,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 @Entity
 @Table(name = "personne")
 @PrimaryKeyJoinColumn(name = "PERSONNE_ID")
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Personne extends Contact implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

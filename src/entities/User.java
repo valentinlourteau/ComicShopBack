@@ -13,6 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -40,6 +43,7 @@ public class User extends Personne implements Serializable {
 	private List<Abonnement> abonnements;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	private List<Reservation> reservations;
 	
 	@Column(name = "STATUT_UTILISATEUR")

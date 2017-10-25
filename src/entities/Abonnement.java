@@ -11,9 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 @Entity
 @Table(name = "abonnement")
-public class Abonnement implements Serializable {
+public class Abonnement extends AuditedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -24,11 +26,25 @@ public class Abonnement implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
+	@Audited
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name = "SERIE_ID")
+	@Audited
 	private Serie serie;
+	
+	@Column(name = "B_ENABLED", columnDefinition = "TINYINT")
+	@Audited
+	private Boolean bEnabled;
+
+	public Boolean getbEnabled() {
+		return bEnabled;
+	}
+
+	public void setbEnabled(Boolean bEnabled) {
+		this.bEnabled = bEnabled;
+	}
 
 	public Long getId() {
 		return id;

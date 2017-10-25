@@ -35,7 +35,7 @@ public class ProduitCommentaire implements Serializable {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@ForeignKey(name = "none")
-	@JoinColumn(name = "PRODUIT_ID", columnDefinition = "INT(11)")
+	@JoinColumn(name = "PRODUIT_ID", columnDefinition = "BIGINT(20)")
 	private Produit produit;
 
 	@Column(name = "COMMENTAIRE", columnDefinition = "longtext")
@@ -43,7 +43,7 @@ public class ProduitCommentaire implements Serializable {
 	private String commentaire;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "GUIDE_ID", columnDefinition = "BIGINT(11)")
+	@JoinColumn(name = "GUIDE_ID", columnDefinition = "BIGINT(20)")
 	private Guide guide;
 	
 	@Column(name = "ORDRE_AFFICHAGE")

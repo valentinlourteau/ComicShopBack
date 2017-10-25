@@ -81,6 +81,13 @@
 			<version>5.2.2.Final</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>5.2.12.Final</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/javax.persistence/persistence-api -->
 		<dependency>
 			<groupId>javax.persistence</groupId>

@@ -1,5 +1,7 @@
 package services;
 
+import java.util.Date;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -13,19 +15,19 @@ import entities.User;
 @Stateless
 @LocalBean
 public class SerieServiceImpl implements SerieService {
-	
+
 	@Inject
 	UserService userService;
-	
+
 	@Inject
 	SerieDao serieDao;
-	
+
 	@Inject
 	AbonnementDao abonnementDao;
 
 	@Override
 	public boolean checkDoublon(String titre) {
-		return serieDao.checkDoublon(titre)  == 1L ? true : false;
+		return serieDao.checkDoublon(titre) == 1L ? true : false;
 	}
 
 	@Override
@@ -42,12 +44,20 @@ public class SerieServiceImpl implements SerieService {
 	public Abonnement suscribeToASerie(Long userId, Long serieId) {
 		User user = userService.findBy(userId);
 		Serie serie = findById(serieId);
-		if (user == null || serie == null || abonnementDao.findBy(userId, serieId) == null ? false : true)
+		Abonnement newAbo = abonnementDao.findBy(userId, serieId);
+		if (user == null || serie == null)
 			return null;
-		Abonnement newAbo = new Abonnement();
-		newAbo.setSerie(serie);
-		newAbo.setUser(user);
-		abonnementDao.persist(newAbo);
+		if (newAbo == null) {
+			newAbo = new Abonnement();
+			newAbo.setSerie(serie);
+			newAbo.setUser(user);
+		}
+		newAbo.setDateMaj(new Date());
+		newAbo.setbEnabled(true);
+		if (newAbo.getId() == null)
+			abonnementDao.persist(newAbo);
+		else
+			abonnementDao.merge(newAbo);
 		return newAbo;
 	}
 
@@ -55,7 +65,8 @@ public class SerieServiceImpl implements SerieService {
 	public boolean unsuscribe(Long userId, Long serieId) {
 		Abonnement abonnement = abonnementDao.findBy(userId, serieId);
 		if (abonnement != null) {
-			abonnementDao.remove(abonnement);
+			abonnement.setDateMaj(new Date());
+			abonnement.setbEnabled(false);
 			return true;
 		}
 		return false;

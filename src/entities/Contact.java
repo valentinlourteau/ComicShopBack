@@ -12,9 +12,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "contact")
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public abstract class Contact implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -22,6 +26,7 @@ public abstract class Contact implements Serializable {
 	@Id
 	@Column(name = "CONTACT_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Audited
 	private Long id;
 
 	public Long getId() {

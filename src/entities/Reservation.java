@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ForeignKey;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -25,6 +27,7 @@ import misc.enums.StatutReservationEnum;
 @Entity
 @Table(name = "reservation")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope = Reservation.class)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Reservation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -32,6 +35,7 @@ public class Reservation implements Serializable {
 	@Id
 	@Column(name = "RESERVATION_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Audited
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
