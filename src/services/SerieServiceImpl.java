@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import dao.AbonnementDao;
 import dao.SerieDao;
 import entities.Abonnement;
+import entities.AbonnementAud;
 import entities.Serie;
 import entities.User;
 
@@ -67,9 +69,22 @@ public class SerieServiceImpl implements SerieService {
 		if (abonnement != null) {
 			abonnement.setDateMaj(new Date());
 			abonnement.setbEnabled(false);
+			abonnementDao.merge(abonnement);
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<AbonnementAud> findAbonnementHistoricByUserId(Long userId) {
+		List<AbonnementAud> abos = abonnementDao.findAbonnementHistoricByUserId(userId);
+		System.out.println(abos.size());
+		return abos;
+	}
+
+	@Override
+	public List<AbonnementAud> findAbonnementHistoricBySerieId(Long serieId) {
+		return abonnementDao.findAbonnementHistoricBySerieId(serieId);
 	}
 
 }

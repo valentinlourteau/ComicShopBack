@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import entities.Abonnement;
 import entities.Serie;
 import entities.User;
 
@@ -12,8 +13,8 @@ public interface SerieDao extends GenericJpaDao<Serie> {
 
 	long checkDoublon(String titre);
 
-	List<User> findAllUserWhichSuscribedToTheSerie(Long serieId);
+	List<Abonnement> findAllUserWhichSuscribedToTheSerie(Long serieId);
 
-	List<Serie> findAllSerieWhichAreSuscribedByTheUser(Long userId);
+	List<Abonnement> findAllSerieWhichAreSuscribedByTheUser(Long userId);
 
 }

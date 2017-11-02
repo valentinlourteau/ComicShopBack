@@ -30,13 +30,15 @@ public class SerieDaoImpl extends GenericJpaDaoImpl<Serie> implements SerieDao {
 	}
 
 	@Override
-	public List<User> findAllUserWhichSuscribedToTheSerie(Long serieId) {
-		return queryFactory().select(ABONNEMENT.user.as(USER)).where(ABONNEMENT.serie.id.eq(serieId)).from(ABONNEMENT).distinct().fetch();
+	public List<Abonnement> findAllUserWhichSuscribedToTheSerie(Long serieId) {
+		return queryFactory().selectFrom(ABONNEMENT).join(ABONNEMENT.user, USER).fetchJoin()
+				.where(ABONNEMENT.serie.id.eq(serieId)).distinct().fetch();
 	}
 
 	@Override
-	public List<Serie> findAllSerieWhichAreSuscribedByTheUser(Long userId) {
-		return queryFactory().select(ABONNEMENT.serie.as(SERIE)).where(ABONNEMENT.user.id.eq(userId)).from(ABONNEMENT).distinct().fetch();
+	public List<Abonnement> findAllSerieWhichAreSuscribedByTheUser(Long userId) {
+		return queryFactory().selectFrom(ABONNEMENT).join(ABONNEMENT.serie, SERIE).fetchJoin()
+				.where(ABONNEMENT.user.id.eq(userId)).distinct().fetch();
 	}
 
 }

@@ -82,13 +82,13 @@ public class SerieAPI extends ParentAPI {
 	@GET
 	@Path("findAbonnementHistoricByUserId")
 	public Response findAbonnementHistoricByUserId(@QueryParam("userId") Long userId) {
-		return Response.ok().build();
+		return Response.ok(write(serieService.findAbonnementHistoricByUserId(userId))).build();
 	}
 	
 	@GET
 	@Path("findAbonnementHistoricBySerieId")
 	public Response findAbonnementHistoricBySerieId(@QueryParam("serieId") Long serieId) {
-		return Response.ok().build();
+		return Response.ok(write(serieService.findAbonnementHistoricBySerieId(serieId))).build();
 	}
 	
 	@GET

@@ -1,6 +1,7 @@
 package misc;
 
 import entities.QAbonnement;
+import entities.QAbonnementAud;
 import entities.QGuide;
 import entities.QProduit;
 import entities.QProduitCommentaire;
@@ -21,6 +22,7 @@ public interface QueryDslEntities {
 	final QStock STOCK = QStock.stock;
 	final QSerie SERIE = QSerie.serie;
 	final QAbonnement ABONNEMENT = QAbonnement.abonnement;
+	final QAbonnementAud ABONNEMENT_AUD = QAbonnementAud.abonnementAud;
 	final QReservation RESERVATION = QReservation.reservation;
 	final QProduitImage PRODUIT_IMAGE = QProduitImage.produitImage;
 }
