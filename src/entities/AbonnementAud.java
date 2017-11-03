@@ -12,14 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Table(name = "abonnement_aud")
 @Entity
+@Table(name = "abonnement_aud")
 public class AbonnementAud implements Serializable {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	@Column(name = "ABONNEMENT_ID")
-	private Long id;
+	private Long abonnementId;
 	
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
@@ -34,13 +32,25 @@ public class AbonnementAud implements Serializable {
 	
 	@Column(name = "DATE_MAJ")
 	private Date dateMaj;
+	
+	@Id
+	@Column(name = "REV", columnDefinition = "INT(11)")
+	private Long rev;
 
-	public Long getId() {
-		return id;
+	public Long getRev() {
+		return rev;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setRev(Long rev) {
+		this.rev = rev;
+	}
+
+	public Long getAbonnementId() {
+		return abonnementId;
+	}
+
+	public void setId(Long abonnementId) {
+		this.abonnementId = abonnementId;
 	}
 
 	public User getUser() {
